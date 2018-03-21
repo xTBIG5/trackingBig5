@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { MapService } from '../map.service';
 
 @Component({
@@ -7,17 +7,20 @@ import { MapService } from '../map.service';
   styleUrls: ['./map.component.css']
 })
 export class MapComponent implements OnInit {
-	users: any;
-	//mapService MapService
+  users: any;
+  //mapService MapService
   constructor( private mapService: MapService ) { }
 
   ngOnInit() {
-  	this.getUsers();
-  	
+    this.getUsers();
+    console.log('ewrqrqwerwerqrewrq\nerqkjlklkj');
   }
-
+  ngAfterViewInit() {
+       //Copy in all the js code from the script.js. Typescript will complain but it works just fine
+       console.log("do after init");
+   }
   getUsers(): void {
-  	this.users = this.mapService.getUsers();
+    this.users = this.mapService.getUsers();
   }
 
 }
