@@ -28,16 +28,16 @@ export class MapComponent implements OnInit, AfterViewInit {
   constructor( private mapService: MapService ) { }
 
   ngOnInit() {
-    //this.getBig5s();
-    this.big5s = this.mapService.getBig5sTest();
-    this.doParty();
+    this.getBig5s();
+    //this.big5s = this.mapService.getBig5sTest();
+    //this.doParty();
   }
   ngAfterViewInit() {
        //Copy in all the js code from the script.js. Typescript will complain but it works just fine
        console.log("do after init");
        //console.log(this.big5s[3])
        //this.doParty();
-   }
+  }
   getBig5s(): void {
     this.mapService.getBig5s()
     .subscribe(big5s => {
@@ -70,9 +70,13 @@ export class MapComponent implements OnInit, AfterViewInit {
 
       let turn = () => {
         if(big5[dimensions[i]]===degree){
-          big5.dress = {}
+          big5.dress = {
+            size:1,
+            type:1,
+          }
           if(++count>1){
             big5.dress.color = this.colors[5]
+            console.log(this.colors[5])
             return
           }
           big5.dress.color = this.colors[i]
@@ -359,6 +363,7 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   mouseenter(big5){
+    console.log('hey')
     let talkingColor = (color) => {
       for(let i=0;i<6;i++)
         if(this.colors[i]===color)

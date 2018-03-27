@@ -24,10 +24,10 @@
 
   <ng-container *ngFor= "let big5 of map.big5s">
   <polygon *ngIf="big5.dress"
-    arrt.points="{{map.shaping(big5.lon, big5.lat, big5.dress.type, big5.dress.size)}}"
-    attr.fill="{{big5.color}}"
-    ng-mouseenter="map.mouseenter(big5)"
-    ng-mouseleave="map.mouseleave(big5)"/>
+    attr.points="{{map.shaping(big5.lon, big5.lat, big5.dress.type, big5.dress.size)}}"
+    attr.fill="{{big5.dress.color}}"
+    (mouseenter)="map.mouseenter(big5)"
+    (mouseleave)="map.mouseleave(big5)"/>
   </ng-container>
   
 </svg>
