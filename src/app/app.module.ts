@@ -11,13 +11,17 @@ import { MapService } from './map.service';
 import { HttpModule } from '@angular/http';
 import { CountryMapComponent } from './country-map/country-map.component';
 import { MapOptionComponent } from './map-option/map-option.component';
+import { AdvanceOptionsComponent } from './advance-options/advance-options.component';
+import { MapInforComponent } from './map-infor/map-infor.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MapComponent,
     CountryMapComponent,
-    MapOptionComponent
+    MapOptionComponent,
+    AdvanceOptionsComponent,
+    MapInforComponent
   ],
   imports: [
     BrowserModule,
