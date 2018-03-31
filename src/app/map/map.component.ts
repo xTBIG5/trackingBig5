@@ -68,9 +68,10 @@ export class MapComponent implements OnInit, AfterViewInit {
           if(++count>1){
             big5.dress.color = this.colors[5]
             console.log(this.colors[5])
-            return
+            i=4;
           }
-          big5.dress.color = this.colors[i]
+          else
+            big5.dress.color = this.colors[i]
         }
       }
 
@@ -78,11 +79,12 @@ export class MapComponent implements OnInit, AfterViewInit {
       let count = 0;
       big5.dress = {
         size:1,
-        type:4,
+        type:3,
       }
       for(;i<5;i++)
         turn()
-
+      if(big5.dress.color==null)
+        delete big5.dress
       /*let randomIndex = Math.floor(Math.random()*5)
       for(i = randomIndex;i<5;i++)
         turn()
