@@ -66,25 +66,27 @@ export class MapComponent implements OnInit, AfterViewInit {
       let turn = () => {
         if(big5[dimensions[i]]===degree){
           if(++count>1){
-            big5.dress.color = this.colors[5]
+            big5.collection.dress.color = this.colors[5]
             console.log(this.colors[5])
             i=4;
           }
           else
-            big5.dress.color = this.colors[i]
+            big5.collection.dress.color = this.colors[i]
         }
       }
 
       let i=0;
       let count = 0;
-      big5.dress = {
-        size:1,
-        type:3,
+      big5.collection = {
+        dress:{
+          size:1,
+          type:1,
+        }
       }
       for(;i<5;i++)
         turn()
-      if(big5.dress.color==null)
-        delete big5.dress
+      if(big5.collection.dress.color==null)
+        delete big5.collection
       /*let randomIndex = Math.floor(Math.random()*5)
       for(i = randomIndex;i<5;i++)
         turn()
@@ -94,15 +96,15 @@ export class MapComponent implements OnInit, AfterViewInit {
     }
 
     let dressUpBig5ShowOneDimension = (big5) => {
-      big5.dress = {}
+      big5.collection = {dress:{}}
       let dimension = showWhat[4]
       let degree = big5[dimension]
       if(degree===3)
-        big5.dress.color = this.colors[0]
+        big5.collection.dress.color = this.colors[0]
       if(degree===2)
-        big5.dress.color = this.colors[2]
+        big5.collection.dress.color = this.colors[2]
       else
-        big5.dress.color = this.colors[3]
+        big5.collection.dress.color = this.colors[3]
     }
 
     let dimensions = ['O', 'C', 'E', 'A', 'N']
@@ -173,8 +175,8 @@ export class MapComponent implements OnInit, AfterViewInit {
           return this.talkingColors[i]
       return this.talkingColors[0]
     }
-    big5.dress.color = talkingColor(big5.dress.color)
-    big5.dress.size = big5.dress.size*1.5
+    big5.collection.dress.color = talkingColor(big5.collection.dress.color)
+    big5.collection.dress.size = big5.collection.dress.size*1.5
   }
   
   mouseleave(big5){
@@ -184,7 +186,7 @@ export class MapComponent implements OnInit, AfterViewInit {
           return this.colors[i]
       return this.colors[0]
     }
-    big5.dress.color = color(big5.dress.color)
-    big5.dress.size = big5.dress.size/1.5
+    big5.collection.dress.color = color(big5.collection.dress.color)
+    big5.collection.dress.size = big5.collection.dress.size/1.5
   }
 }

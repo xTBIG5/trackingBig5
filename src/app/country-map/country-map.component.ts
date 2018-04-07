@@ -7,6 +7,10 @@ import { MapComponent } from '../map/map.component';
 })
 export class CountryMapComponent implements OnInit {
   @Input() map: MapComponent;
+
+  hover = ['#C6BF9D','#C6BF9D','#C6BF9D','#C6BF9D','#C6BF9D','#C6BF9D','#C6BF9D',
+            '#C6BF9D','#C6BF9D','#C6BF9D','#C6BF9D','#C6BF9D','#C6BF9D','#C6BF9D',]
+
   constructor() { }
 
   ngOnInit() {
@@ -22,6 +26,13 @@ export class CountryMapComponent implements OnInit {
     this.map.dlat = 2;
     this.map.dlon = 3;
 
+  }
+
+  mouseenter(index){
+    this.hover[index] = '#A9B39A'
+  }
+  mouseleave(index){
+    this.hover[index] = '#C6BF9D'
   }
 
 }

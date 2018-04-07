@@ -10,19 +10,17 @@ export class AdvanceOptionsComponent implements OnInit {
   @Input() big5s:any;
 
   options = [];
-  /*frontChain = null;
-  mixChain = null;
-  unShowChain = null;*/
   newChain = {
     first:{},
     chaining:{},
     append(big5){
-      if(this.first){
+      if(this.first.big5){
         this.chaining.next = {big5:big5}
         this.chaining = this.chaining.next
       }else{
         this.first = {big5:big5}
-        this.chaining = {big5:big5}
+        this.chaining = this.first
+        console.log(this)
       }
     }
   }
@@ -54,11 +52,9 @@ export class AdvanceOptionsComponent implements OnInit {
 
     while(node){
       if(seacher.checkOut(node.big5)){
-        if(node.big5.collection){
-          let collection = {dress:option.dress, next:'typescript-_-'}
-          collection.next = node.big5.collection
-          node.big5.collection = collection
-        }else
+        if(node.big5.collection)
+          node.big5.collection = {dress:option.dress, next:node.big5.collection}
+        else
           node.big5.collection = {dress:option.dress}
 
         noOneCome = false
@@ -168,21 +164,15 @@ export class AdvanceOptionsComponent implements OnInit {
       if(searcher.checkOut(big5)){
 
         if(big5.collection)
-          if(big5.collection.dress.z>z){
-            let collection = {dress:option.dress,next:null}
-            collection.next = big5.collection
-            big5.collection = collection
-          }else{
+          if(big5.collection.dress.z>z)
+            big5.collection = {dress:option.dress,next:big5.collection}
+          else{
             let collection = big5.collection
             while(collection.next){
-              if(collection.next.dress.z>z){
-                let collection_ = {dress:option.dress,next:null}
-                collection_.next = collection.next
-                collection.next = collection_
-              }else if(!collection.next.next){
-                let collection_ = {dress:option.dress,next:null}
-                collection.next.next = collection_
-              }
+              if(collection.next.dress.z>z)
+                collection.next = {dress:option.dress,next:collection.next}
+              else if(!collection.next.next)
+                collection.next.next = {dress:option.dress}
 
               collection = collection.next
             }
@@ -241,210 +231,6 @@ export class AdvanceOptionsComponent implements OnInit {
     this.refresh({})
 
   }
-
-/*
-  addRule(option){
-
-    let searchRule = (searchChain) => {
-      if(!searchChain)
-        return
-
-      let addDress = (big5) => {
-        let temp = {dress:option.dress, next:'typescript -_-'}
-        if(big5.collection)
-          temp.next = big5.collection
-        big5.collection = temp
-      }
-
-      let node = searchChain.first
-
-      while(searcher.checkOut(node.big5)){
-        newRuleChain.append(node.big5)
-        addDress(node.big5)
-        if(node.next){
-          searchChain.first = node.next
-          node = node.next
-        }else{
-          delete searchChain.first
-          return
-        }
-      }
-      
-      while(node.next)
-        if(searcher.checkOut(node.next.big5)){
-          newRuleChain.append(node.next.big5)
-          addDress(node.big5)
-          node.next = node.next.next
-        }else
-          node = node.next
-      searchChain.chaining = node
-    }
-
-    this.options[this.options.length] = option
-
-    let newRuleChain = Object.create(this.newChain)
-    let searcher = this.getSearcher(option.describer)
-
-    searchRule(this.frontChain)
-    searchRule(this.mixChain)
-    searchRule(this.unShowChain)
-
-    if(newRuleChain.first){
-      //typescript -_-
-      if(!this.mixChain)
-        if(this.frontChain && this.frontChain.first)
-          this.mixChain = this.frontChain
-      else if(this.mixChain.first && this.frontChain && this.frontChain.first){
-        this.mixChain.chaining.next = this.frontChain.first
-        this.mixChain.chaining = this.frontChain.chaining
-      }
-      this.frontChain = newRuleChain
-      if(!this.mixChain.first)
-        this.mixChain = null
-      if(this.unShowChain && !this.unShowChain.first)
-        this.unShowChain = null
-
-      this.changeOrder()
-    }else{
-      //tell user to redescribe the rule
-    }
-  }
-
-  deleteRule(_id){
-
-    let holdLowerRule = {}
-    let i = 0  
-    while(i<this.options.length){
-      holdLowerRule[this.options[i].dress._id] = Object.create(this.newChain)
-      i++
-    }
-    
-    let unShowBig5 = Object.create(this.newChain)
-
-    let frontBig5 = this.frontChain.first
-    let mixBig5 = this.mixChain.first
-    let reorderMix = []
-    if(this.options[0].dress._id===_id){
-
-      while(frontBig5){
-        if(!frontBig5.big5.collection.next)
-          unShowBig5.append(frontBig5.big5)
-        else{
-          frontBig5.big5.collection = frontBig5.big5.collection.next
-          holdLowerRule[frontBig5.big5.collection.dress._id].append(frontBig5.big5)
-        }
-        frontBig5 = frontBig5.next
-      }
-
-      while(mixBig5){
-        holdLowerRule[mixBig5.big5.collection.dress._id].append(mixBig5.big5)
-        mixBig5 = mixBig5.next
-      }
-
-      if(this.options.length===1){
-        this.options = []
-        this.frontChain = null
-        return
-      }
-
-      this.frontChain = holdLowerRule[this.options[1].dress._id]
-      for(let i=2;i<this.options.length;i++)
-        reorderMix[reorderMix.length] = this.options[i].dress._id
-
-    }else{
-
-      while(frontBig5){
-        let collection = frontBig5.big5.collection
-        while(collection.next){
-          if(_id===collection.next.dress._id){
-            collection.next = collection.next.next
-            break
-          }
-          collection = collection.next
-        }
-        frontBig5 = frontBig5.next
-      }
-
-      while(mixBig5){
-        if(mixBig5.big5.collection.dress._id===_id)
-          mixBig5.big5.collection = mixBig5.big5.collection.next
-        else{
-          let collection = mixBig5.big5.collection
-          while(collection.next){
-            if(_id===collection.next.dress._id){
-              collection.next = collection.next.next
-              break
-            }
-            collection = collection.next
-          }
-        }
-
-        if(mixBig5.big5.collection==null)
-          unShowBig5.append(mixBig5.big5)
-        else
-          holdLowerRule[mixBig5.big5.collection.dress._id].append(mixBig5.big5)
-
-        mixBig5 = mixBig5.next
-      }
-
-      for(let i=1;i<this.options.length;i++)
-        if(this.options[i].dress._id===_id){
-          this.options.splice(i,1)
-          i-=1
-        }else
-          reorderMix[reorderMix.length] = this.options[i].dress._id
-
-    }
-
-    if(reorderMix.length===0)
-      this.mixChain = null
-    else{
-      this.mixChain = holdLowerRule[reorderMix[0]]
-      for(let _id of reorderMix){
-        this.mixChain.chaining.next = holdLowerRule[_id].first
-        this.mixChain.chaining = holdLowerRule[_id].chaining
-      }
-    }
-
-    if(unShowBig5.first)
-      if(this.unShowChain.first){
-        this.unShowChain.chaining.next = unShowBig5.first
-        this.unShowChain.chaining = unShowBig5.chaining
-      }
-
-  }
-
-  changeRule(_id){
-    this.deleteRule(_id)
-  }
-
-  changeOrder(){
-    let i = this.big5s.length
-    let big5 = this.big5s
-
-    let turning = (turner) => {
-      while(turner){
-        big5[--i] = turner.big5
-        turner = turner.next
-      }
-    }
-
-    turning(this.frontChain.first)
-    
-    if(this.mixChain)
-      turning(this.mixChain.first)
-
-    if(this.unShowChain)
-      turning(this.unShowChain.first)
-  }
-
-
-  makeOriginChain(){
-    let chain = Object.create(this.newChain)
-    for(let big5 of this.big5s)
-      chain.append(big5)
-    return chain
-  }*/
 
   getSearcher(describer){
     let CheckOut = {

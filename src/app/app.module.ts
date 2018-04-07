@@ -13,6 +13,12 @@ import { CountryMapComponent } from './country-map/country-map.component';
 import { MapOptionComponent } from './map-option/map-option.component';
 import { AdvanceOptionsComponent } from './advance-options/advance-options.component';
 import { MapInforComponent } from './map-infor/map-infor.component';
+import { MatButtonModule, MatCheckboxModule} from '@angular/material';
+import { MatAutocompleteModule} from '@angular/material/autocomplete';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -21,13 +27,21 @@ import { MapInforComponent } from './map-infor/map-infor.component';
     CountryMapComponent,
     MapOptionComponent,
     AdvanceOptionsComponent,
-    MapInforComponent
+    MapInforComponent,
+
   ],
   imports: [
     BrowserModule,
     //HttpClientModule,
     HttpModule,
-
+    MatButtonModule,
+    MatCheckboxModule,
+    MatAutocompleteModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    BrowserAnimationsModule,
   ],
   providers: [
   	MapService,

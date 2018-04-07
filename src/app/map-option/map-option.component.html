@@ -1,0 +1,33 @@
+<div style='width: 100%'>
+
+
+
+</div>
+<div style='width: 100%'>
+  <ng-container *ngFor="let node of btnNodes">
+    <button mat-raised-button class="btn-node">
+      <span class="highlight-text">{{node.text}}</span>
+    </button>
+
+  </ng-container>
+  <mat-form-field >
+    <input #input matInput placeholder="State" aria-label="State" [matAutocomplete]="auto" [formControl]="textCtrl">
+
+    <mat-autocomplete #auto="matAutocomplete"  [autoActiveFirstOption]="true" 
+    (optionSelected)='getSelectedValue($event.option.value)' >
+      <mat-option *ngFor="let node of filteredNodes | async" [value]='node.query'>
+
+          <span class="{{node.class.degree}}">{{node.query[0]}}</span><span *ngIf="node.query.length!==1">{{node.query.slice(1,-1)}}</span>
+          <span *ngIf="node.query.length!==1" class="{{node.class.dimension}}">
+          {{node.query[node.query.length-1]}}</span>
+            
+      </mat-option>
+    </mat-autocomplete>
+
+  </mat-form-field>
+  
+</div>
+<div style='width: 100%; text-align:center;'>
+    <button mat-raised-button (click)='resetQuery()'>Reset</button>
+    <button *ngIf="isAccepted" mat-raised-button (click)='acceptedClick()'>Apply</button>
+</div>

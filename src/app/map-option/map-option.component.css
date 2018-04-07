@@ -1,0 +1,11 @@
+.btn-node{
+  min-width:1px;
+  padding-left:5px;
+  padding-right:5px;
+  background-color:#ee345d;
+  line-height:26px;
+}
+.highlight-text{
+  color:#A12345;
+  font-weight:bold;
+}
