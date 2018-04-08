@@ -14,8 +14,6 @@ export class CountryMapComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-
-    this.map.big5s = this.map.big5Collection;
     
     this.map.latitude_    = 14.5;
     this.map.longitude_   = -14.5;
@@ -26,6 +24,16 @@ export class CountryMapComponent implements OnInit {
     this.map.dlat = 2;
     this.map.dlon = 3;
 
+    if(this.map.big5Collection)
+      this.map.big5s = this.getCountryMapCollection(this.map.big5Collection)
+    else
+      this.map.getBig5s(this.getCountryMapCollection)
+
+  }
+
+  getCountryMapCollection(collection){
+
+    return collection
   }
 
   mouseenter(index){

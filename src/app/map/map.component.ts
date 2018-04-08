@@ -27,24 +27,20 @@ export class MapComponent implements OnInit, AfterViewInit {
   constructor( private mapService: MapService ) { }
 
   ngOnInit() {
-    this.getBig5s();
-    /*this.big5Collection = this.mapService.getBig5sTest();
-    this.doParty();*/
   }
   ngAfterViewInit() {
-       //Copy in all the js code from the script.js. Typescript will complain but it works just fine
        console.log("do after init");
-       //console.log(this.big5s[3])
-       //this.doParty();
   }
-  getBig5s(): void {
+  getBig5s(collectBig5): void {
     this.mapService.getBig5s()
     .subscribe(collection => {
-      console.log(collection)
       this.big5Collection = collection;
+      this.big5s = collectBig5(collection)
       this.doParty();
     });
   }
+
+
  
 
   doParty(speed=25,step=10,showWhat='highestdimensionDegree'){
