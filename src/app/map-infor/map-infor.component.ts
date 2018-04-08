@@ -1,4 +1,5 @@
 import { Component, OnInit, Input} from '@angular/core';
+import { MapComponent } from '../map/map.component'
 
 @Component({
   selector: 'tb-map-infor',
@@ -6,7 +7,7 @@ import { Component, OnInit, Input} from '@angular/core';
   styleUrls: ['./map-infor.component.css']
 })
 export class MapInforComponent implements OnInit {
-  @Input() big5s: any
+  @Input() map: MapComponent
   constructor() { }
 
   ngOnInit() {

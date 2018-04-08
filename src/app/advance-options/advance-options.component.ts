@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { MapComponent } from '../map/map.component'
 
 @Component({
   selector: 'tb-advance-options',
@@ -7,7 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class AdvanceOptionsComponent implements OnInit {
 
-  @Input() big5s:any;
+  @Input() map:MapComponent;
 
   options = [];
   newChain = {
@@ -35,7 +36,7 @@ export class AdvanceOptionsComponent implements OnInit {
 
   makeBig5Chain(){
     let chain = Object.create(this.newChain)
-    for(let big5 of this.big5s)
+    for(let big5 of this.map.big5s)
       chain.append(big5)
     return chain
   }
@@ -46,9 +47,17 @@ export class AdvanceOptionsComponent implements OnInit {
       option.dress.z += 1
     this.options.unshift(option)
 
+    if(this.options.length===1){
+      let node = this.big5Chain.first
+      while(node){
+        delete node.big5.collection
+        node = node.next
+      }
+    }
+
     let seacher = this.getSearcher(option.describer)
     let node = this.big5Chain.first
-    let noOneCome = true
+    let noOneComes = true
 
     while(node){
       if(seacher.checkOut(node.big5)){
@@ -56,14 +65,15 @@ export class AdvanceOptionsComponent implements OnInit {
           node.big5.collection = {dress:option.dress, next:node.big5.collection}
         else
           node.big5.collection = {dress:option.dress}
+        node.big5.collection.shapePoints = this.map.shaping(node.big5.lon, node.big5.lat, option.dress.type, option.dress.size)
 
-        noOneCome = false
+        noOneComes = false
        }
 
       node = node.next
     }
 
-    if(noOneCome)
+    if(noOneComes)
       return false
 
     this.refresh({})
@@ -73,17 +83,16 @@ export class AdvanceOptionsComponent implements OnInit {
   } 
 
   refresh(holder){
-
     for(let o of this.options)
       holder[o.dress.z] = Object.create(this.newChain)
     holder[0] = Object.create(this.newChain)
 
     let node = this.big5Chain.first
     while(node){
-      if(!node.big5.collection)
-        holder[0].append(node.big5)
-      else
+      if(node.big5.collection)
         holder[node.big5.collection.dress.z].append(node.big5)
+      else
+        holder[0].append(node.big5)
 
       node = node.next
     }
@@ -97,10 +106,11 @@ export class AdvanceOptionsComponent implements OnInit {
       }
     }
 
-    let i = this.big5s.length
+    let big5s = this.map.big5s
+    let i = big5s.length
     node = this.big5Chain.first
     while(node){
-      this.big5s[--i] = node.big5
+      big5s[--i] = node.big5
       node = node.next
     }
   }
@@ -233,7 +243,7 @@ export class AdvanceOptionsComponent implements OnInit {
   }
 
   getSearcher(describer){
-    let CheckOut = {
+    let Searcher = {
       node : null,
       orObjectNumber : 0,
 
@@ -271,9 +281,8 @@ export class AdvanceOptionsComponent implements OnInit {
           for(let i = 1; i<this.orObjectNumber;i++)
             temp = temp.next
           if(temp.next){
-            let temp2 = temp.next
+            node.next = temp.next
             temp.next = node
-            temp.next = temp2
           }
           else
             temp.next = node
@@ -284,7 +293,7 @@ export class AdvanceOptionsComponent implements OnInit {
     }
 
     let OrNode = {
-      getBig5Criterion(criterion){
+      setBig5Criterion(criterion){
         this.criterion = criterion
       },
       checkOut(big5){
@@ -293,7 +302,6 @@ export class AdvanceOptionsComponent implements OnInit {
     }
 
     let AndNode = {
-      criteria:null,
       pushBig5Criterion(criterion){
         if(this.criteria){
           let temp = this.criteria
@@ -316,8 +324,6 @@ export class AdvanceOptionsComponent implements OnInit {
     }
 
     let Criterion = {
-      key:null,
-      degree:null,
       setCriterion(key, degree){
         this.key = key
         this.degree = degree
@@ -336,19 +342,15 @@ export class AdvanceOptionsComponent implements OnInit {
         return 2
       }
 
-      let getOrNode = function(){
+      let getOrNode = function(orNode){
         let criterionOr = Object.create(OrNode)
-        criterionOr.setBig5Criterion(getCriterion())
+        criterionOr.setBig5Criterion(orNode)
         return criterionOr
       }
-      let getAndNode = function(childNode=null){
+      let getAndNode = function(andNode){
         if(!isAndNode)
-          var criterionAnd = Object.create(AndNode)
-        if(childNode)
-          criterionAnd.setBig5Criterion(getCriterion())
-        else
-          criterionAnd.pushBig5Criterion(childNode)
-        return criterionAnd
+          criterionAnd = Object.create(AndNode)
+        criterionAnd.pushBig5Criterion(andNode)
       }
       let getCriterion = function(){
         let criterion = Object.create(Criterion)
@@ -356,48 +358,52 @@ export class AdvanceOptionsComponent implements OnInit {
         return criterion
       }
 
-      let node = Object.create(CheckOut)
+      let searcher = Object.create(Searcher)
       let isOrNode = true
       let isAndNode = false
+      let criterionAnd
 
       while(describer[i-1]!==')'){
         if(describer[i]==='('){
           i++
-          let childNode = noding()
+          let childSearcher = noding()
 
           if(describer[i]==='|' || describer[i]===')'){
             if(isOrNode)
-              node.pushBottom(childNode)
+              searcher.pushBottom(getOrNode(childSearcher))
             else{
-              node.pushMiddle(getAndNode(childNode))
+              searcher.pushMiddle(getAndNode(childSearcher))
               isAndNode = false
+              isOrNode = true
             }
           }
           else if(describer[i]==='&'){
-            getAndNode(childNode)
+            getAndNode(childSearcher)
             isAndNode = true
+            isOrNode = false
           }
         }
         else{
           if(describer[i]==='|' || describer[i]===')'){
             if(isOrNode)
-              node.pushTop(getOrNode())
+              searcher.pushTop(getOrNode(getCriterion()))
             else{
-              node.pushMiddle(getAndNode())
+              searcher.pushMiddle(getAndNode(getCriterion()))
               isAndNode = false
+              isOrNode = true
             }
           }
           else if(describer[i]==='&'){
-            getAndNode()
+            getAndNode(getCriterion())
             isAndNode = true
+            isOrNode = false
           }
 
         }
 
         i++
       }
-
-      return node
+      return searcher
     }
 
     let i = 1;

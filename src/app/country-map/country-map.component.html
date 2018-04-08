@@ -24,7 +24,7 @@
 
   <ng-container *ngFor= "let big5 of map.big5s">
   <polygon *ngIf="big5.collection"
-    attr.points="{{big5.collection.dress.shapePoints}}"
+    attr.points="{{big5.collection.shapePoints}}"
     attr.fill="{{big5.collection.dress.color}}"
     (mouseenter)="map.mouseenter(big5)"
     (mouseleave)="map.mouseleave(big5)"/>

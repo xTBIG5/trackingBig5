@@ -150,11 +150,12 @@ export class MapOptionComponent implements OnInit {
     this.btnNodes = []
   }
 
-  acceptedClick(){
+  apply(){
 
-    let describer = ''
+    let describer = '('
     for(let node of this.btnNodes)
       describer += node.text
+    describer = describer+")"
     console.log(describer)
     this.advanceOptions.addRule({
       describer:describer,

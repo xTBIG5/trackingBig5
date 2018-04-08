@@ -84,8 +84,8 @@ export class MapComponent implements OnInit, AfterViewInit {
         dress:{
           size:1,
           type:1,
-          shapePoints:this.shaping(big5.lon, big5.lat, 1, 1)
-        }
+        },
+        shapePoints:this.shaping(big5.lon, big5.lat, 1, 1)
       }
       for(;i<5;i++)
         turn()
@@ -104,8 +104,8 @@ export class MapComponent implements OnInit, AfterViewInit {
         dress:{
           size:1,
           type:1,
-          shapePoints:this.shaping(big5.lon, big5.lat, 1, 1)
-        }
+        },
+        shapePoints:this.shaping(big5.lon, big5.lat, 1, 1)
       }
       let dimension = showWhat[4]
       let degree = big5[dimension]
