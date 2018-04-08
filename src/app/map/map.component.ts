@@ -28,9 +28,11 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
   }
+
   ngAfterViewInit() {
        console.log("do after init");
   }
+
   getBig5s(collectBig5): void {
     this.mapService.getBig5s()
     .subscribe(collection => {
@@ -40,7 +42,12 @@ export class MapComponent implements OnInit, AfterViewInit {
     });
   }
 
+  getBig5sTest(collectBig5){
+    this.big5Collection = this.mapService.getBig5sTest()
+    this.big5s = collectBig5(this.mapService.getBig5sTest())
 
+    this.doParty()
+  }
  
 
   doParty(speed=25,step=10,showWhat='highestdimensionDegree'){
@@ -64,7 +71,6 @@ export class MapComponent implements OnInit, AfterViewInit {
         if(big5[dimensions[i]]===degree){
           if(++count>1){
             big5.collection.dress.color = this.colors[5]
-            console.log(this.colors[5])
             i=4;
           }
           else
@@ -78,6 +84,7 @@ export class MapComponent implements OnInit, AfterViewInit {
         dress:{
           size:1,
           type:1,
+          shapePoints:this.shaping(big5.lon, big5.lat, 1, 1)
         }
       }
       for(;i<5;i++)
@@ -93,7 +100,13 @@ export class MapComponent implements OnInit, AfterViewInit {
     }
 
     let dressUpBig5ShowOneDimension = (big5) => {
-      big5.collection = {dress:{}}
+      big5.collection = {
+        dress:{
+          size:1,
+          type:1,
+          shapePoints:this.shaping(big5.lon, big5.lat, 1, 1)
+        }
+      }
       let dimension = showWhat[4]
       let degree = big5[dimension]
       if(degree===3)
@@ -118,10 +131,17 @@ export class MapComponent implements OnInit, AfterViewInit {
         degree = 1
       dressUpBig5 = dressUpBig5ShowOneDegreeDimension
     }
+
     
     let iterate = setInterval(dressing,speed)
   }
 
+  dressUp(){
+    for(let big5 of this.big5s)
+      if(big5.collection)
+        big5.collection.dress.shapePoints = this.shaping(big5.lon, big5.lat, big5.collection.dress.type, big5.collecion.dress.size)
+    
+  }
 
   shaping(longitude, latitude, type, size){
     let x = this.convertToX(longitude)

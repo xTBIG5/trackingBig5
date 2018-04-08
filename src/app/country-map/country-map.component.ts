@@ -24,6 +24,9 @@ export class CountryMapComponent implements OnInit {
     this.map.dlat = 2;
     this.map.dlon = 3;
 
+    //testdata
+    this.map.getBig5sTest(this.getCountryMapCollection)
+
     if(this.map.big5Collection)
       this.map.big5s = this.getCountryMapCollection(this.map.big5Collection)
     else
