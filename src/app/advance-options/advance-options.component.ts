@@ -15,14 +15,16 @@ export class AdvanceOptionsComponent implements OnInit {
     first:{},
     chaining:{},
     append(big5){
-      if(this.first.big5){
+      if(this.isNotEmpty()){
         this.chaining.next = {big5:big5}
         this.chaining = this.chaining.next
       }else{
         this.first = {big5:big5}
         this.chaining = this.first
-        console.log(this)
       }
+    },
+    isNotEmpty(){
+      return this.first.big5!=null
     }
   }
   big5Chain:any
@@ -31,6 +33,13 @@ export class AdvanceOptionsComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  }
+
+  isChainedBig5s(){
+    return this.big5Chain!=null
+  }
+
+  chainBig5s(){
     this.big5Chain = this.makeBig5Chain()
   }
 
@@ -41,12 +50,13 @@ export class AdvanceOptionsComponent implements OnInit {
     return chain
   }
 
-  addRule(option){
+  addDress(option){
 
     for(let option of this.options)
       option.dress.z += 1
     this.options.unshift(option)
 
+    //temp
     if(this.options.length===1){
       let node = this.big5Chain.first
       while(node){
@@ -55,12 +65,14 @@ export class AdvanceOptionsComponent implements OnInit {
       }
     }
 
-    let seacher = this.getSearcher(option.describer)
+    let searcher = this.getSearcher(option.describer)
+    //console.log("err", searcher)
+
     let node = this.big5Chain.first
     let noOneComes = true
 
     while(node){
-      if(seacher.checkOut(node.big5)){
+      if(searcher.checkOut(node.big5)){
         if(node.big5.collection)
           node.big5.collection = {dress:option.dress, next:node.big5.collection}
         else
@@ -73,8 +85,10 @@ export class AdvanceOptionsComponent implements OnInit {
       node = node.next
     }
 
-    if(noOneComes)
+    if(noOneComes){
+      console.log('noone likes the dress')
       return false
+    }
 
     this.refresh({})
 
@@ -100,22 +114,31 @@ export class AdvanceOptionsComponent implements OnInit {
     this.big5Chain = holder[this.options[0].dress.z]
     for(let o=1;o<this.options.length;o++){
       let chain = holder[this.options[o].dress.z]
-      if(chain.first){
+      if(chain.isNotEmpty()){
         this.big5Chain.chaining.next = chain.first
         this.big5Chain.chaining = chain.chaining
       }
+    }
+    if(holder[0].isNotEmpty()){
+        this.big5Chain.chaining.next = holder[0].first
+        this.big5Chain.chaining = holder[0].chaining
+
     }
 
     let big5s = this.map.big5s
     let i = big5s.length
     node = this.big5Chain.first
+    //console.log("oo")
+    //console.log(big5s)
     while(node){
+      //console.log(node.big5)
       big5s[--i] = node.big5
       node = node.next
     }
+    //console.log(this.map.big5s)
   }
 
-  deleteRule(z, isRefresh=true){
+  deleteDress(z, isRefresh=true){
 
     let when = 'notYet'
     for(let i=0;i<this.options.length;i++)
@@ -154,9 +177,9 @@ export class AdvanceOptionsComponent implements OnInit {
 
   }
 
-  changeRule(option){
+  changeDress(option){
 
-    this.deleteRule(option.dress.z, false)
+    this.deleteDress(option.dress.z, false)
 
     let when = 'notYet'
     for(let i=0;i<this.options.length;i++)
@@ -198,7 +221,7 @@ export class AdvanceOptionsComponent implements OnInit {
     this.refresh({})
   }
 
-  swapRule(index1, index2){
+  swapDress(index1, index2){
 
     let option = this.options[index1]
     this.options[index1] = this.options[index2]
@@ -303,6 +326,8 @@ export class AdvanceOptionsComponent implements OnInit {
 
     let AndNode = {
       pushBig5Criterion(criterion){
+        //console.log('andNode')
+        //console.log(criterion)
         if(this.criteria){
           let temp = this.criteria
           while(temp.next)
@@ -347,7 +372,7 @@ export class AdvanceOptionsComponent implements OnInit {
         criterionOr.setBig5Criterion(orNode)
         return criterionOr
       }
-      let getAndNode = function(andNode){
+      let setAndNode = function(andNode){
         if(!isAndNode)
           criterionAnd = Object.create(AndNode)
         criterionAnd.pushBig5Criterion(andNode)
@@ -372,13 +397,16 @@ export class AdvanceOptionsComponent implements OnInit {
             if(isOrNode)
               searcher.pushBottom(getOrNode(childSearcher))
             else{
-              searcher.pushMiddle(getAndNode(childSearcher))
+              setAndNode(childSearcher)
+              searcher.pushMiddle(criterionAnd)
               isAndNode = false
               isOrNode = true
             }
+            if(describer[i]===')')
+              break
           }
           else if(describer[i]==='&'){
-            getAndNode(childSearcher)
+            setAndNode(childSearcher)
             isAndNode = true
             isOrNode = false
           }
@@ -388,13 +416,16 @@ export class AdvanceOptionsComponent implements OnInit {
             if(isOrNode)
               searcher.pushTop(getOrNode(getCriterion()))
             else{
-              searcher.pushMiddle(getAndNode(getCriterion()))
+              setAndNode(getCriterion())
+              searcher.pushMiddle(criterionAnd)
               isAndNode = false
               isOrNode = true
             }
+            if(describer[i]===')')
+              break
           }
           else if(describer[i]==='&'){
-            getAndNode(getCriterion())
+            setAndNode(getCriterion())
             isAndNode = true
             isOrNode = false
           }

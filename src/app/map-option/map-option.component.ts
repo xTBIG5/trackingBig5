@@ -30,16 +30,8 @@ export class MapOptionComponent implements OnInit {
     this.filteredNodes = this.textCtrl.valueChanges
       .pipe(
         startWith(''),
-        map(text => text ? this.filterNodes(text): this.refreshNodes())
+        map(text => this.filterNodes(text))
       )
-  }
-
-  refreshNodes(){
-    for(let node of this.queryNodes){
-      node.class.degree = ""
-      node.class.dimension = ''
-    }
-    return this.queryNodes
   }
 
   filterNodes(text){
@@ -52,15 +44,35 @@ export class MapOptionComponent implements OnInit {
           test = true
           break
         }
+
+    for(let node of this.queryNodes){
+      node.class.degree = ""
+      node.class.dimension = ''
+    }
+
     if(!test)
-      return this.refreshNodes()
+      return this.queryNodes
 
     let search = (query) => {
       let count = 0
       if(query.length===1){
         for(let letter of text)
           if(query===letter)
-            return 1
+            return 3
+        for(let i=1;i<text.length;i++){
+          let pattern = text.slice(i-1,i+1)
+          if(pattern==='OR' && query==='|')
+            return 3
+          if(pattern==='CL' && query===')')
+            return 3
+          if(pattern==='OP' && query==='(')
+            return 3
+        }
+        for(let i=2;i<text.length;i++){
+          let pattern = text.slice(i-2,i+1)
+          if(pattern==="AND" && query==='&')
+            return 3
+        }
         return 0
       }
       let degreeCounted, dimensionCounted = false
@@ -144,10 +156,16 @@ export class MapOptionComponent implements OnInit {
       index:this.btnNodes.length
     })
     this.input.nativeElement.value = ""
+    if(!this.advanceOptions.isChainedBig5s())
+      this.advanceOptions.chainBig5s()
   }
 
   resetQuery(){
     this.btnNodes = []
+    for(let node of this.queryNodes){
+      node.class.degree = ""
+      node.class.dimension = ''
+    }
   }
 
   apply(){
@@ -157,7 +175,7 @@ export class MapOptionComponent implements OnInit {
       describer += node.text
     describer = describer+")"
     console.log(describer)
-    this.advanceOptions.addRule({
+    this.advanceOptions.addDress({
       describer:describer,
       dress:{
         z:1,
@@ -166,6 +184,12 @@ export class MapOptionComponent implements OnInit {
         size:1.5
       }
 
-    })    
+    })
+
+    this.resetQuery()
+
+    console.log(this.advanceOptions.map.big5s)
+
+    console.log(this.advanceOptions.options)  
   }
  }

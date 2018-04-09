@@ -71,7 +71,14 @@ export class MapService {
       return of(result as T);
     };
   }
-
+  getBig5sTest_(){
+    return [
+      { _id: 7, arr_id: 2, lon: -17.510958, lat: 14.737403, O: 2, C: 1, E: 1, A: 1, N: 3 },
+      { _id: 14, arr_id: 2, lon: -17.497759, lat: 14.732262, O: 2, C: 3, E: 2, A: 2, N: 1 },
+      { _id: 21, arr_id: 2, lon: -17.487934, lat: 14.750047, O: 3, C: 1, E: 1, A: 1, N: 2 },
+      { _id: 28, arr_id: 2, lon: -17.480833, lat: 14.724458, O: 1, C: 2, E: 3, A: 1, N: 2 },
+      { _id: 35, arr_id: 2, lon: -17.474797, lat: 14.760298, O: 1, C: 2, E: 2, A: 3, N: 2 },
+      { _id: 42, arr_id: 2, lon: -17.475318, lat: 14.75645, O: 1, C: 3, E: 1, A: 2, N: 1 },]}
 
   getBig5sTest(){
     return [
