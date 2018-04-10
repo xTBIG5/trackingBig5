@@ -66,30 +66,33 @@ export class MapComponent implements OnInit, AfterViewInit {
     }
 
     let dressUpBig5ShowOneDegreeDimension = (big5) => {
+      let type=1, size=1
+      let dresses = [
+        {size:size, type:type, color:this.colors[0]},
+        {size:size, type:type, color:this.colors[1]},
+        {size:size, type:type, color:this.colors[2]},
+        {size:size, type:type, color:this.colors[3]},
+        {size:size, type:type, color:this.colors[4]},
+        {size:size, type:type, color:this.colors[5]},
+      ]
 
-      let turn = () => {
+      let count = 0;
+      big5.collection = {
+        shapePoints:this.shaping(big5.lon, big5.lat, type, size)
+      }
+
+      for(let i=0;i<5;i++){
         if(big5[dimensions[i]]===degree){
           if(++count>1){
-            big5.collection.dress.color = this.colors[5]
-            i=4;
+            big5.collection.dress = dresses[5]
+            break
           }
           else
-            big5.collection.dress.color = this.colors[i]
+            big5.collection.dress = dresses[i]
         }
       }
 
-      let i=0;
-      let count = 0;
-      big5.collection = {
-        dress:{
-          size:1,
-          type:1,
-        },
-        shapePoints:this.shaping(big5.lon, big5.lat, 1, 1)
-      }
-      for(;i<5;i++)
-        turn()
-      if(big5.collection.dress.color==null)
+      if(big5.collection.dress==null)
         delete big5.collection
       /*let randomIndex = Math.floor(Math.random()*5)
       for(i = randomIndex;i<5;i++)
@@ -100,21 +103,27 @@ export class MapComponent implements OnInit, AfterViewInit {
     }
 
     let dressUpBig5ShowOneDimension = (big5) => {
+      let type=1, size=1
+      let dresses = [
+        {size:size, type:type, color:this.colors[0]},
+        {size:size, type:type, color:this.colors[1]},
+        {size:size, type:type, color:this.colors[2]},
+        {size:size, type:type, color:this.colors[3]},
+        {size:size, type:type, color:this.colors[4]},
+        {size:size, type:type, color:this.colors[5]},
+      ]
       big5.collection = {
-        dress:{
-          size:1,
-          type:1,
-        },
-        shapePoints:this.shaping(big5.lon, big5.lat, 1, 1)
+        shapePoints:this.shaping(big5.lon, big5.lat, type, size)
       }
+
       let dimension = showWhat[4]
       let degree = big5[dimension]
       if(degree===3)
-        big5.collection.dress.color = this.colors[0]
+        big5.collection.dress.color = dresses[0]
       if(degree===2)
-        big5.collection.dress.color = this.colors[2]
+        big5.collection.dress.color = dresses[2]
       else
-        big5.collection.dress.color = this.colors[3]
+        big5.collection.dress.color = dresses[3]
     }
 
     let dimensions = ['O', 'C', 'E', 'A', 'N']
@@ -134,13 +143,6 @@ export class MapComponent implements OnInit, AfterViewInit {
 
     
     let iterate = setInterval(dressing,speed)
-  }
-
-  dressUp(){
-    for(let big5 of this.big5s)
-      if(big5.collection)
-        big5.collection.dress.shapePoints = this.shaping(big5.lon, big5.lat, big5.collection.dress.type, big5.collecion.dress.size)
-    
   }
 
   shaping(longitude, latitude, type, size){
@@ -184,7 +186,7 @@ export class MapComponent implements OnInit, AfterViewInit {
     return y
   }
 
-  mouseenter(big5){
+  mouseenter(event, big5){
     console.log('hey')
     let talkingColor = (color) => {
       for(let i=0;i<6;i++)
@@ -192,18 +194,12 @@ export class MapComponent implements OnInit, AfterViewInit {
           return this.talkingColors[i]
       return this.talkingColors[0]
     }
-    big5.collection.dress.color = talkingColor(big5.collection.dress.color)
-    big5.collection.dress.size = big5.collection.dress.size*1.5
+    event.target.setAttribute('fill',talkingColor(big5.collection.dress.color))
+    event.target.setAttribute('points',this.shaping(big5.lon, big5.lat, big5.collection.dress.type, big5.collection.dress.size*1.5))
   }
   
-  mouseleave(big5){
-    let color = (talkingcolor) => {
-      for(let i=0;i<6;i++)
-        if(this.talkingColors[i]===talkingcolor)
-          return this.colors[i]
-      return this.colors[0]
-    }
-    big5.collection.dress.color = color(big5.collection.dress.color)
-    big5.collection.dress.size = big5.collection.dress.size/1.5
+  mouseleave(event, big5){
+    event.target.setAttribute('fill', big5.collection.dress.color)
+    event.target.setAttribute('points',this.shaping(big5.lon, big5.lat, big5.collection.dress.type, big5.collection.dress.size))
   }
 }

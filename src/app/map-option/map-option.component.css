@@ -1,9 +1,47 @@
-.btn-node{
+
+.btn{
   min-width:1px;
   padding-left:5px;
   padding-right:5px;
-  background-color:#ee345d;
   line-height:26px;
+}
+.btn-condition{
+  min-width:1px;
+  padding-left:5px;
+  padding-right:5px;
+  background-color:#302442;
+  line-height:26px;
+}
+.btn-parentheses{
+  min-width:1px;
+  padding-left:5px;
+  padding-right:5px;
+  background-color:#93693F;
+  line-height:26px;
+}
+.btn-big5{
+  min-width:1px;
+  padding-left:5px;
+  padding-right:5px;
+  background-color:#17939C;
+  line-height:26px;
+}
+.text{
+  color:#FFFFFF;
+  font-weight:bold;
+
+}
+.text-condition{
+  color:#028B09;
+  font-weight:bold;
+}
+.text-parentheses{
+  color:#FF1B00;
+  font-weight:bold;
+}
+.text-big5{
+  color:#006DEA;
+  font-weight:bold;
 }
 .highlight-text{
   color:#A12345;

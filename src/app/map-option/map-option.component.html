@@ -5,8 +5,13 @@
 </div>
 <div style='width: 100%'>
   <ng-container *ngFor="let node of btnNodes">
-    <button mat-raised-button class="btn-node">
-      <span class="highlight-text">{{node.text}}</span>
+    
+    <button mat-raised-button 
+    [class.btn-big5]="node.btnColor==='btn-big5'"
+    [class.btn-condition]="node.btnColor==='btn-condition'"
+    [class.btn-parentheses]="node.btnColor==='btn-parentheses'"
+    >
+      <span class="text">{{node.text}}</span>
     </button>
 
   </ng-container>
@@ -15,7 +20,7 @@
 
     <mat-autocomplete #auto="matAutocomplete"  [autoActiveFirstOption]="true" 
     (optionSelected)='getSelectedValue($event.option.value)' >
-      <mat-option *ngFor="let node of filteredNodes | async" [value]='node.query'>
+      <mat-option *ngFor="let node of filteredNodes | async" [value]='node.query+"__trick__"'>
 
           <span class="{{node.class.degree}}">{{node.query[0]}}</span><span *ngIf="node.query.length!==1">{{node.query.slice(1,-1)}}</span>
           <span *ngIf="node.query.length!==1" class="{{node.class.dimension}}">

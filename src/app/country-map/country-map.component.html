@@ -26,8 +26,8 @@
   <polygon *ngIf="big5.collection"
     attr.points="{{big5.collection.shapePoints}}"
     attr.fill="{{big5.collection.dress.color}}"
-    (mouseenter)="map.mouseenter(big5)"
-    (mouseleave)="map.mouseleave(big5)"/>
+    (mouseenter)="map.mouseenter($event, big5).bind(map)"
+    (mouseleave)="map.mouseleave($event, big5).bind(map)"/>
   </ng-container>
   
 </svg>

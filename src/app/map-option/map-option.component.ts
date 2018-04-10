@@ -35,6 +35,11 @@ export class MapOptionComponent implements OnInit {
   }
 
   filterNodes(text){
+
+    if(text.length>9)
+      if(text.slice(-9, text.length)==="__trick__")
+        return this.queryNodes
+
     text = text.toUpperCase()
 
     let test = false
@@ -45,12 +50,9 @@ export class MapOptionComponent implements OnInit {
           break
         }
 
-    for(let node of this.queryNodes){
-      node.class.degree = ""
-      node.class.dimension = ''
-    }
+    this.refreshQueryNodes()
 
-    if(!test)
+    if(text==="")
       return this.queryNodes
 
     let search = (query) => {
@@ -148,23 +150,52 @@ export class MapOptionComponent implements OnInit {
     return nodes
   }
   getSelectedValue(value){
+    value = value.slice(0, value.length - 9)
     let query = value[0]
     if(value.length>1)
       query += "-"+value[value.length-1]
+
+    let colorBtn = (text) => {
+      if(text[0]==='&' || text[0]==='|')
+        return 'btn-condition'
+      if(text[0]==='(' || text[0]===')')
+        return 'btn-parentheses'
+      return 'btn-big5'
+    }
+   /* let colorText = (text) => {
+      if(text[0]==='&' || text[0]==='|')
+        return 'text-condition'
+      if(text[0]==='(' || text[0]===')')
+        return 'text-parentheses'
+      return 'text-big5'
+    }*/
+
     this.btnNodes.push({
       text:query,
+      btnColor:colorBtn(value),
+      //textColor:colorText(value),
       index:this.btnNodes.length
     })
+
     this.input.nativeElement.value = ""
+    this.refreshQueryNodes()
+
     if(!this.advanceOptions.isChainedBig5s())
       this.advanceOptions.chainBig5s()
   }
 
-  resetQuery(){
-    this.btnNodes = []
+
+  refreshQueryNodes(){
     for(let node of this.queryNodes){
       node.class.degree = ""
       node.class.dimension = ''
+    }
+  }
+
+  resetQuery(){
+    if(this.btnNodes.length>0){
+      this.btnNodes = []
+      this.refreshQueryNodes()
     }
   }
 
@@ -188,8 +219,8 @@ export class MapOptionComponent implements OnInit {
 
     this.resetQuery()
 
-    console.log(this.advanceOptions.map.big5s)
+    /*console.log(this.advanceOptions.map.big5s)
 
-    console.log(this.advanceOptions.options)  
+    console.log(this.advanceOptions.options) */ 
   }
  }
