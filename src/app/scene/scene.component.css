@@ -1,0 +1,26 @@
+.rect{
+  animation: bigger 1s;
+  animation-delay: 1s;
+}
+
+.smile:hover{
+  transition: transform .6s;
+  transform: matrix(1,0,0,1,-6.3,-2.4) scale(1.06);
+}
+.smile:leave{
+  transform: scale(1.1);
+}
+
+
+.recth{
+  transform: translateY(100px);
+  transition: transform 2s,
+}
+.rect:hover{
+
+}
+
+.line{
+  transform: matrix(1,2,1,3,5,6);
+  transition: transform 2s;
+}

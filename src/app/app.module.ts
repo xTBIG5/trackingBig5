@@ -19,6 +19,7 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SceneComponent } from './scene/scene.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MapOptionComponent,
     AdvanceOptionsComponent,
     MapInforComponent,
+    SceneComponent,
 
   ],
   imports: [

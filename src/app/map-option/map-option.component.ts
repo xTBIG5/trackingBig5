@@ -217,10 +217,6 @@ export class MapOptionComponent implements OnInit {
 
     })
 
-    this.resetQuery()
-
-    /*console.log(this.advanceOptions.map.big5s)
-
-    console.log(this.advanceOptions.options) */ 
+    this.resetQuery() 
   }
  }
