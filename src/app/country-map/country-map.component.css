@@ -1,15 +1,10 @@
-
 .path{
 	opacity: 1;
 	cursor: pointer;
 	stroke-opacity: 1;
 	stroke-linejoin: round;
 	fill-opacity: 1;
-	/*stroke: #ffffff;*/
+	stroke: #ffffff;
 	stroke-width: 1.8900000000000003;
-	stroke-linejoin: round;
-	transform :matrix(0.4041,0,0,0.4041,0,0);
-	fill-opacity: 1;
+	transform: matrix(0.4041,0,0,0.4041,0,0);
 }
-/*class="sm_state_SEN5515" opacity="1" stroke-opacity="1"
- stroke-width="1.8900000000000003" stroke-linejoin="round" transform="matrix(0.4041,0,0,0.4041,0,0)" fill-opacity="1"*/
