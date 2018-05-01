@@ -1,17 +1,28 @@
-<svg height="2400" version="1.1" width="6516.8" xmlns="http://www.w3.org/2000/svg" style="overflow: hidden; position: relative; left: -0.850006px;" viewBox=".4000267857142289 -1.40002678571428574 407.30000000000007 299.96756051587306" preserveAspectRatio="xMinYMin" fill="#E7EAEB" >
+<svg height="600" version="1.1" width="814.6" xmlns="http://www.w3.org/2000/svg" style="overflow: hidden; position: relative; left: -0.850006px;" viewBox=".4000267857142289 -1.40002678571428574 407.30000000000007 299.96756051587306" preserveAspectRatio="xMinYMin" fill="#E7EAEB" >
+ <!--  <rect x="-2015.01" y="-1483.75" width="5040" height="3711.85" r="0" rx="0" ry="0" fill="#ffffff" stroke="none" transform="matrix(0.4041,0,0,0.4041,0,0)" style="fill-opacity: 0;" stroke-width="2.474834274490548" fill-opacity="0"/> -->
  <rect x="-4" y="-4" width="814.6" height="600" fill-opacity=".6"  />
-  
-  <path *ngFor="let d of pathShapes; index as i" class='path' attr.d={{d}}
-  	attr.fill={{hover[i]}}  (mouseenter)='mouseenter(i)' (mouseleave)='mouseleave(i)' />
-
+  <path  attr.fill="{{hover[0]}}" (mouseenter)='mouseenter(0)' (mouseleave)='mouseleave(0)'  attr.d={{pathShapes[0]}} class="path sm_state_SEN5515" />
+  <path  attr.fill="{{hover[2]}}" (mouseenter)='mouseenter(2)' (mouseleave)='mouseleave(2)'  attr.d={{pathShapes[1]}} class="path sm_state_SEN765" />
+  <path  attr.fill="{{hover[3]}}" (mouseenter)='mouseenter(3)' (mouseleave)='mouseleave(3)'  attr.d={{pathShapes[2]}} class="path sm_state_SEN774" />
+  <path  attr.fill="{{hover[4]}}" (mouseenter)='mouseenter(4)' (mouseleave)='mouseleave(4)'  attr.d={{pathShapes[3]}} class="path sm_state_SEN764" />
+  <path  attr.fill="{{hover[5]}}" (mouseenter)='mouseenter(5)' (mouseleave)='mouseleave(5)'  attr.d={{pathShapes[4]}} class="path sm_state_SEN767" />
+  <path  attr.fill="{{hover[6]}}" (mouseenter)='mouseenter(6)' (mouseleave)='mouseleave(6)'  attr.d={{pathShapes[5]}} class="path sm_state_SEN766" />
+  <path  attr.fill="{{hover[7]}}" (mouseenter)='mouseenter(7)' (mouseleave)='mouseleave(7)'  attr.d={{pathShapes[6]}} class="path sm_state_SEN768" />
+  <path  attr.fill="{{hover[8]}}" (mouseenter)='mouseenter(8)' (mouseleave)='mouseleave(8)'  attr.d={{pathShapes[7]}} class="path sm_state_SEN5517" />
+  <path  attr.fill="{{hover[9]}}" (mouseenter)='mouseenter(9)' (mouseleave)='mouseleave(9)'  attr.d={{pathShapes[8]}} class="path sm_state_SEN5516" />
+  <path  attr.fill="{{hover[10]}}" (mouseenter)='mouseenter(10)' (mouseleave)='mouseleave(10)'  attr.d={{pathShapes[9]}} class="path sm_state_SEN759" />
+  <path  attr.fill="{{hover[11]}}" (mouseenter)='mouseenter(11)' (mouseleave)='mouseleave(11)'  attr.d={{pathShapes[10]}} class="path sm_state_SEN5514" />
+  <path  attr.fill="{{hover[12]}}" (mouseenter)='mouseenter(12)' (mouseleave)='mouseleave(12)'  attr.d={{pathShapes[11]}} class="path sm_state_SEN779" />
+  <path  attr.fill="{{hover[13]}}" (mouseenter)='mouseenter(13)' (mouseleave)='mouseleave(13)'  attr.d={{pathShapes[12]}} class="path sm_state_SEN763" />
+  <path  attr.fill="{{hover[1]}}" (mouseenter)='mouseenter(1)' (mouseleave)='mouseleave(1)'  attr.d={{pathShapes[13]}} class="path sm_state_SEN775" />
   <desc>Created with Raphaël 2.1.0</desc>
-
+  
   <ng-container *ngFor= "let big5 of map.big5s">
-	  <polygon *ngIf="big5.collection"
-	    attr.points="{{big5.collection.shapePoints}}"
-	    attr.fill="{{big5.collection.dress.color}}"
-	    (mouseenter)="map.mouseenter($event, big5).bind(map)"
-	    (mouseleave)="map.mouseleave($event, big5).bind(map)"/>
+  <polygon *ngIf="big5.collection"
+    attr.points="{{big5.collection.shapePoints}}"
+    attr.fill="{{big5.collection.dress.color}}"
+    (mouseenter)="map.mouseenter($event, big5).bind(map)"
+    (mouseleave)="map.mouseleave($event, big5).bind(map)"/>
   </ng-container>
   
 </svg>
