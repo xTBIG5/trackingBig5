@@ -46,7 +46,6 @@ export class MapComponent implements OnInit, AfterViewInit {
     this.big5Collection = this.mapService.getBig5sTest()
     this.big5s = collectBig5(this.mapService.getBig5sTest())
 
-    this.doParty()
   }
  
 
@@ -66,7 +65,7 @@ export class MapComponent implements OnInit, AfterViewInit {
     }
 
     let dressUpBig5ShowOneDegreeDimension = (big5) => {
-      let type=1, size=1
+      let type=1, size=0.8
       let dresses = [
         {size:size, type:type, color:this.colors[0]},
         {size:size, type:type, color:this.colors[1]},
