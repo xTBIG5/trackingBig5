@@ -65,7 +65,7 @@ export class MapComponent implements OnInit, AfterViewInit {
     }
 
     let dressUpBig5ShowOneDegreeDimension = (big5) => {
-      let type=1, size=0.8
+      let type=1, size=0.6
       let dresses = [
         {size:size, type:type, color:this.colors[0]},
         {size:size, type:type, color:this.colors[1]},

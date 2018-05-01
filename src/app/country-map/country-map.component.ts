@@ -200,7 +200,7 @@ export class CountryMapComponent implements OnInit {
   testArr(){
     let big5s = []
     for(let big5 of this.map.big5s){
-      if(big5.arr_id%6===5){
+      if(big5.arr_id%6===0){
         big5.O = 3
         big5.C = 1
         big5.E = 1
@@ -235,20 +235,13 @@ export class CountryMapComponent implements OnInit {
           big5.A = 1
           big5.N = 3
         }
-      /*if(big5.arr_id%6===4){
-        big5.O = 1
-        big5.C = 1
-        big5.E = 1
-        big5.A = 1
-        big5.N = 3
-      }
       if(big5.arr_id%6===5){
         big5.O = 1
         big5.C = 3
         big5.E = 1
         big5.A = 1
         big5.N = 3
-      }*/
+      }
      /* big5s.push(big5)}
     console.log(big5s.length)
     return big5s*/
