@@ -20,6 +20,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SceneComponent } from './scene/scene.component';
+import { DrawToolComponent } from './draw-tool/draw-tool.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { SceneComponent } from './scene/scene.component';
     AdvanceOptionsComponent,
     MapInforComponent,
     SceneComponent,
+    DrawToolComponent,
 
   ],
   imports: [
