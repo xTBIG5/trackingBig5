@@ -94,9 +94,9 @@ export class DrawToolComponent implements OnInit {
 		let path = {
 			foreward:{
 				point:point,
-				isEdgePoint:false,
+				edgePoints:[],
 				add(newPoint, edgePoints=[]){
-					if(this.isEdgePoint){
+					if(this.edgePoints!==0){
 						alert('This is edge head, choose the another head')
 						return false
 					}
@@ -125,9 +125,9 @@ export class DrawToolComponent implements OnInit {
 			},
 			backward:{
 				point:point,
-				isEdgePoint:false,
+				edgePoints:[],
 				add(newPoint, edgePoints=[]){
-					if(this.isEdgePoint){
+					if(this.edgePoints.length!==0){
 						alert('This is edge head, choose the another head')
 						return false
 					}
@@ -203,12 +203,15 @@ export class DrawToolComponent implements OnInit {
 	reset(self){
 		self.pickedSites = []
 	}
-	addPoint(self,point, site){
+	addPoint(self, site, point, edgePoints=false){
 		if(!site.arr.moveHead){
 			self.newPathShape(site.arr, point)
 			site.arr.moveHead = site.arr.paths[0].foreward
 		}else{
-			site.arr.moveHead.add(point)
+			if(edgePoints)
+				site.arr.moveHead.add(point, edgePoints)
+			else
+				site.arr.moveHead.add(point)
 			let polyline = site.arr.shapes[0]
 			let points=''
 			for(let point of site.arr.moveHead.getList())
@@ -274,7 +277,65 @@ export class DrawToolComponent implements OnInit {
 		self.pickedSites = []
 	}
 	finish(self){
-		
+		if(self.pickedSite.length<3){
+			alert(`pick more to do finish process of arr${self.pickedSite[0].arr_id}`)
+			return
+		}
+		if(self.pickedsties.length===4){
+			let regionPaths = ''
+			for(let arr of self.arrs)
+				regionPaths += arr.pointsP+',\n'
+			console.log('print region paths')
+			console.log(regionPaths)
+			return
+		}
+		let path = self.pickedSite[0].arr.paths[0]
+		let pointF = path.foreward.edgePoints[1]
+		let headI = 0
+		let pathI = 0
+		for(let i=0;i<2;i++)
+			for(let j=0;j<self.paths[i].length;j++)
+				if(self.paths[i][j].x===pointF.x && self.paths[i][j].y===pointF.y){
+					headI = j
+					pathI =i
+				}
+
+		let count = 0
+		let pointB = path.backware.edgePoints[0]
+		for(let i=headI+1;i!==headI;i++){
+			count++
+			if(i===self.paths[pathI].length)
+				i=0
+			if(self.paths[pathI][i].x===pointB.x && self.paths[pathI][i].y===pointB.y){
+				if(count>self.paths[pathI].length-count){
+					var points = path.foreward.getList().concat(gatherForeward(i+1,headI-1))
+				}else{
+					var points = path.backward.getList().concat(gatherForeward(headI,i))
+				}
+				let pointsP = ''
+				for(let point of points)
+					pointsP += 'L'+point.x+','+point.y
+				pointsP = 'M'+pointsP.slice(1)+'Z'
+				self.pickedSite[0].arr.pointsP = pointsP
+				let arrShape = self.document.createElementNS(self.xmlns,'path')
+				arrShape.setAttribute('points', pointsP)
+				arrShape.setAttribute('fill', '#9BAF60')
+				arrShape.setAttribute('opacity', '.7')
+				self.svg.nativeElement.appendChild(arrShape)
+				console.log('print points of arr',self.pickedSite[0].arr_id)
+				console.log(`{arr_id: ${self.pickedSite[0].arr.arr_id},points: ${pointsP}}`)
+			}
+		}
+		function gatherForeward(i,j){
+			let l = []
+			for(;i!==j;i++){
+				if(i===self.paths[pathI].length)
+					i=0
+				l.push(self.paths[pathI][i])
+			}
+			l.push(self.paths[pathI][j])
+			return l
+		}
 	}
 	transform(d){
 		let d1 = []
@@ -311,11 +372,11 @@ export class DrawToolComponent implements OnInit {
 		}
 	}
 	setEdgePoint(self,direction){
-		let head1 = self.pickedSites[0].arr.moveHead
-		let head2 = self.pickedSites[1].arr.moveHead
+		let site1 = self.pickedSites[0]
+		let site2 = self.pickedSites[1]
 
-		let x = head1.point.x
-		let y = head1.point.y
+		let x = site1.arr.moveHead.point.x
+		let y = site1.arr.moveHead.point.y
 		let xTwoPoints = []
 		let yTwoPoints = []
 		for(let shape of self.paths){
@@ -340,6 +401,7 @@ export class DrawToolComponent implements OnInit {
 		  let x__ = (y_*(y-points[0]['y'])+x_*points[0]['x'])/x_
 		  return x__
 		}
+
 		if(direction==='N'){
 			let l = {}, ys = []
 			for(let points of xTwoPoints){
@@ -353,8 +415,8 @@ export class DrawToolComponent implements OnInit {
 			for(let y__ of ys)
 				if(y__>y_)
 					y_ = y__
-			head1.add({x:x,y:y_}, l[y_])
-			head2.add({x:x,y:y_}, l[y_])
+			self.addPoint(self, site1, {x:x,y:y_}, l[y_])
+			self.addPoint(self, site2, {x:x,y:y_}, l[y_])
 		}
 		if(direction==='S'){
 			let l = {}, ys = []
@@ -369,8 +431,8 @@ export class DrawToolComponent implements OnInit {
 			for(let y__ of ys)
 				if(y__<y_)
 					y_ = y__
-			head1.add({x:x,y:y_}, l[y_])
-			head2.add({x:x,y:y_}, l[y_])
+			self.addPoint(self, site1, {x:x,y:y_}, l[y_])
+			self.addPoint(self, site2, {x:x,y:y_}, l[y_])
 		}
 		if(direction==='E'){
 			let l = {}, xs = []
@@ -385,8 +447,8 @@ export class DrawToolComponent implements OnInit {
 			for(let x__ of xs)
 				if(x__<x_)
 					x_ = x__
-			head1.add({x:x_,y:y}, l[x_])
-			head2.add({x:x_,y:y}, l[x_])
+			self.addPoint(self, site1, {x:x_,y:y}, l[x_])
+			self.addPoint(self, site2, {x:x_,y:y}, l[x_])
 		}
 		if(direction==='W'){
 			let l = {}, xs = []
@@ -401,8 +463,8 @@ export class DrawToolComponent implements OnInit {
 			for(let x__ of xs)
 				if(x__>x_)
 					x_ = x__
-			head1.add({x:x_,y:y}, l[x_])
-			head2.add({x:x_,y:y}, l[x_])
+			self.addPoint(self, site1, {x:x_,y:y}, l[x_])
+			self.addPoint(self, site2, {x:x_,y:y}, l[x_])
 		}
 	}
 	toNorth(self){
