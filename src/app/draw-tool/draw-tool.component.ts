@@ -24,6 +24,8 @@ export class DrawToolComponent implements OnInit {
 
 	paths = []
 
+	pickRule = 'default'
+
   constructor(@Inject(DOCUMENT) private  document: any) { }
 
   ngOnInit() {
@@ -55,6 +57,7 @@ export class DrawToolComponent implements OnInit {
 			polygon.addEventListener('mouseleave', this.mouseleave.bind(this))
 			polygon.addEventListener('dblclick', this.pickSite.bind(this))
 			polygon.site = site
+			polygon.tool = this
 			for(let arr of this.arrs)
 				if(arr.arr_id===site.arr_id){
 					polygon.site.arr = arr
@@ -75,7 +78,7 @@ export class DrawToolComponent implements OnInit {
 					break
 				}
 			if(!isExist)
-				arrs.push({arr_id:site.arr_id, paths:[], })
+				arrs.push({arr_id:site.arr_id, paths:[], pathShapes:[]})
 		}console.log(arrs)
 		return arrs
 	}
@@ -95,12 +98,14 @@ export class DrawToolComponent implements OnInit {
 			foreward:{
 				point:point,
 				edgePoints:[],
+				circle:null,
+				polyline:null,
 				add(newPoint, edgePoints=[]){
-					if(this.edgePoints!==0){
+					if(this.edgePoints.length!==0){
 						alert('This is edge head, choose the another head')
 						return false
 					}
-					newPoint.pevious = this.point
+					newPoint.previous = this.point
 					this.point.next = newPoint
 					this.point = newPoint
 					if(edgePoints.length!==0){
@@ -126,6 +131,8 @@ export class DrawToolComponent implements OnInit {
 			backward:{
 				point:point,
 				edgePoints:[],
+				circle:null,
+				polyline:null,
 				add(newPoint, edgePoints=[]){
 					if(this.edgePoints.length!==0){
 						alert('This is edge head, choose the another head')
@@ -164,69 +171,78 @@ export class DrawToolComponent implements OnInit {
 		polyline.colorIndex = 0
 		polyline.path = newPath
 		polyline.setAttribute('stroke', polyline.colors[0])
-		polyline.setAttribute('stroke-width', '.5')
+		polyline.setAttribute('fill', 'none')
+		polyline.setAttribute('stroke-width', '.3')
 		let newCircle = (head)=>{
 			let circle = this.document.createElementNS(this.xmlns,'circle')
 			circle.colors = ['#7B00A7', '#A70000',]
 			circle.colorIndex = 0
 			circle.arr = arr
+			//circle.tool = this
 			circle.moveHead = head
 			circle.setAttribute('fill', circle.colors[0])
 			circle.setAttribute('r', '.6')
-			circle.setAttribute('rx', circle.moveHead.x)
-			circle.setAttribute('ry', circle.moveHead.y)
+			circle.setAttribute('cx', circle.moveHead.point.x)
+			circle.setAttribute('cy', circle.moveHead.point.y)
 			circle.addEventListener('dblclick', (e)=>{
 				e.target.arr.moveHead = e.target.moveHead
-				e.target.setAttribute('fill', e.target.colors[e.target.colorIndex++%2])
+				e.target.setAttribute('fill', e.target.colors[++e.target.colorIndex%2])
+				//e.target.tool.pickedSites = []
 			})
 
 			return circle
 		}
 		let circle1 = newCircle(newPath.backward)
+		newPath.backward.circle = circle1
+		newPath.backward.polyline = polyline
 		let circle2 = newCircle(newPath.foreward)
+		newPath.foreward.circle = circle2
+		newPath.foreward.polyline = polyline
+
 		this.svg.nativeElement.appendChild(polyline)
 		this.svg.nativeElement.appendChild(circle1)
 		this.svg.nativeElement.appendChild(circle2)
-		arr.shapes = [polyline, circle1, circle2]
+		arr.pathShapes.push([polyline, circle1, circle2])
+		arr.moveHead = newPath.foreward
 	}
 
 
 	pickSite(event){
 		let site = event.target.site
-		for(let i=0;i<this.pickedSites.length;i++)
-			if(site.arr_id===this.pickedSites[i].arr_id)
-				this.pickedSites.splice(i,1)
+		if(event.target.tool.pickRule==='default')
+			for(let i=0;i<this.pickedSites.length;i++)
+				if(site.arr_id===this.pickedSites[i].arr_id)
+					this.pickedSites.splice(i,1)
 		this.pickedSites.push(site)
 	}
-
 
 	reset(self){
 		self.pickedSites = []
 	}
 	addPoint(self, site, point, edgePoints=false){
 		if(!site.arr.moveHead){
-			self.newPathShape(site.arr, point)
-			site.arr.moveHead = site.arr.paths[0].foreward
+			self.newPathShapes(site.arr, point)
 		}else{
 			if(edgePoints)
 				site.arr.moveHead.add(point, edgePoints)
-			else
-				site.arr.moveHead.add(point)
-			let polyline = site.arr.shapes[0]
+			else{
+				if(!site.arr.moveHead.add(point))
+					return
+			}
+			let polyline = site.arr.moveHead.polyline
+			console.log(polyline)
 			let points=''
 			for(let point of site.arr.moveHead.getList())
 				points += point.x+','+point.y+' '
+			console.log('po',points)
 			polyline.setAttribute('points', points)
-			let circle = site.arr.shapes[1]
-			circle.setAttribute('rx', point.x)
-			circle.setAttribute('ry', point.y)
-			circle = site.arr.shapes[2]
-			circle.setAttribute('rx', point.x)
-			circle.setAttribute('ry', point.y)
+			let circle = site.arr.moveHead.circle
+			circle.setAttribute('cx', point.x)
+			circle.setAttribute('cy', point.y)
 		}
 	}
 	one(self){
-		if(self.pickedsties.length!=2){
+		if(self.pickedSites.length!=2){
 			alert("not two points, you have choose one()")
 			return
 		}
@@ -236,12 +252,12 @@ export class DrawToolComponent implements OnInit {
 			x: self.map.convertToX(site1.lon),
 			y: self.map.convertToY(site1.lat)
 		}
-		self.addPoint(self,point,site1)
-		self.addPoint(self,point,site2)
+		self.addPoint(self,site1,point)
+		self.addPoint(self,site2,point)
 		self.pickedSites = []
 	}
 	two(self){
-		if(self.pickedsties.length!=2){
+		if(self.pickedSites.length!=2){
 			alert("not two points, you have choose two()")
 			return
 		}
@@ -251,18 +267,18 @@ export class DrawToolComponent implements OnInit {
 			x: self.map.convertToX((site1.lon+site2.lon)/2),
 			y: self.map.convertToY((site1.lat+site2.lat)/2)
 		}
-		self.addPoint(self,point,site1)
-		self.addPoint(self,point,site2)
+		self.addPoint(self,site1,point)
+		self.addPoint(self,site2,point)
 		self.pickedSites = []
 	}
 	three(self){
-		if(self.pickedsties.length<3){
+		if(self.pickedSites.length<3){
 			alert("not three points, you have choose three()")
 			return
 		}
 		let site1 = self.pickedSites[0]
 		let site2 = self.pickedSites[1]
-		let site3 = self.pickedSites[3]
+		let site3 = self.pickedSites[2]
 		let point = {
 			x: self.map.convertToX((site1.lon+site2.lon)/2),
 			y: self.map.convertToY((site1.lat+site2.lat)/2)
@@ -271,17 +287,17 @@ export class DrawToolComponent implements OnInit {
 		let y3 = self.map.convertToY(site3.lat)
 		point.x += (x3-point.x)/3
 		point.y += (y3-point.y)/3
-		self.addPoint(self,point,site1)
-		self.addPoint(self,point,site2)
-		self.addPoint(self,point,site3)
+		self.addPoint(self,site1,point)
+		self.addPoint(self,site2,point)
+		self.addPoint(self,site3,point)
 		self.pickedSites = []
 	}
 	finish(self){
-		if(self.pickedSite.length<3){
-			alert(`pick more to do finish process of arr${self.pickedSite[0].arr_id}`)
+		if(self.pickedSites.length<3){
+			alert(`pick more to do finish process of arr${self.pickedSites[0].arr_id}`)
 			return
 		}
-		if(self.pickedsties.length===4){
+		if(self.pickedSites.length===4){
 			let regionPaths = ''
 			for(let arr of self.arrs)
 				regionPaths += arr.pointsP+',\n'
@@ -289,52 +305,162 @@ export class DrawToolComponent implements OnInit {
 			console.log(regionPaths)
 			return
 		}
-		let path = self.pickedSite[0].arr.paths[0]
-		let pointF = path.foreward.edgePoints[1]
-		let headI = 0
-		let pathI = 0
-		for(let i=0;i<2;i++)
-			for(let j=0;j<self.paths[i].length;j++)
-				if(self.paths[i][j].x===pointF.x && self.paths[i][j].y===pointF.y){
-					headI = j
-					pathI =i
-				}
 
-		let count = 0
-		let pointB = path.backware.edgePoints[0]
-		for(let i=headI+1;i!==headI;i++){
-			count++
-			if(i===self.paths[pathI].length)
-				i=0
-			if(self.paths[pathI][i].x===pointB.x && self.paths[pathI][i].y===pointB.y){
-				if(count>self.paths[pathI].length-count){
-					var points = path.foreward.getList().concat(gatherForeward(i+1,headI-1))
-				}else{
-					var points = path.backward.getList().concat(gatherForeward(headI,i))
-				}
-				let pointsP = ''
-				for(let point of points)
-					pointsP += 'L'+point.x+','+point.y
-				pointsP = 'M'+pointsP.slice(1)+'Z'
-				self.pickedSite[0].arr.pointsP = pointsP
-				let arrShape = self.document.createElementNS(self.xmlns,'path')
-				arrShape.setAttribute('points', pointsP)
-				arrShape.setAttribute('fill', '#9BAF60')
-				arrShape.setAttribute('opacity', '.7')
-				self.svg.nativeElement.appendChild(arrShape)
-				console.log('print points of arr',self.pickedSite[0].arr_id)
-				console.log(`{arr_id: ${self.pickedSite[0].arr.arr_id},points: ${pointsP}}`)
-			}
-		}
-		function gatherForeward(i,j){
-			let l = []
-			for(;i!==j;i++){
+		if(self.pickedSites[0].arr.paths.length===1){
+			let path = self.pickedSites[0].arr.paths[0]
+			let pointF = path.foreward.edgePoints[1]
+			let headI = 0
+			let pathI = 0
+			for(let i=0;i<self.paths.length;i++)
+				for(let j=0;j<self.paths[i].length;j++)
+					if(self.paths[i][j].x===pointF.x && self.paths[i][j].y===pointF.y){
+						headI = j
+						pathI =i
+					}
+
+			let count = 0
+			let pointB = path.backward.edgePoints[0]
+			for(let i=headI+1;i!==headI;i++){
+				count++
 				if(i===self.paths[pathI].length)
 					i=0
-				l.push(self.paths[pathI][i])
+				if(self.paths[pathI][i].x===pointB.x && self.paths[pathI][i].y===pointB.y){
+					if(count>self.paths[pathI].length-count){
+						var points = path.foreward.getList().concat(gatherForeward(self.paths[pathI],i+1,headI-1))
+					}else{
+						var points = path.backward.getList().concat(gatherForeward(self.paths[pathI],headI,i))
+					}
+					let pointsP = ''
+					for(let point of points)
+						pointsP += 'L'+point.x+','+point.y
+					pointsP = 'M'+pointsP.slice(1)+'Z'
+					self.pickedSites[0].arr.pointsP = pointsP
+					let arrShape = self.document.createElementNS(self.xmlns,'path')
+					arrShape.setAttribute('d', pointsP)
+					/*arrShape.setAttribute('fill', '#9BAF60')
+					arrShape.setAttribute('opacity', '.7')*/
+					arrShape.setAttribute('fill', 'none')
+					arrShape.setAttribute('stroke-width', '.5')
+					arrShape.setAttribute('stroke', '#9BAF60')
+
+					self.svg.nativeElement.appendChild(arrShape)
+					console.log('print points of arr',self.pickedSites[0].arr_id)
+					console.log(`{arr_id: ${self.pickedSites[0].arr.arr_id},d: '${pointsP}'}`)
+				}
 			}
-			l.push(self.paths[pathI][j])
+		}else{
+			let path1 = self.pickedSites[0].arr.paths[0]
+			let path2 = self.pickedSites[0].arr.paths[1]
+			let point1F = path1.foreward.edgePoints[1]
+			let point1B = path1.backward.edgePoints[1]
+			let headFI = 0
+			let pathI = 0
+			for(let i=0;i<self.paths.length;i++)
+				for(let j=0;j<self.paths[i].length;j++)
+					if(self.paths[i][j]===point1F){
+						headFI = j
+						pathI =i
+						break
+					}
+			let headBI = 0
+			for(let i=0;i<self.paths.length;i++)
+				for(let j=0;j<self.paths[i].length;j++)
+					if(self.paths[i][j]===point1B){
+						headBI = j
+						break
+					}
+
+			let isForeward = true
+			let point2B = path2.backward.edgePoints[0]
+			let point2F = path2.foreward.edgePoints[0]
+			let toAnotherPath = (headI, anotherPoint) => {
+				let point1ToPath2 = {i:0,isForeward:true,direction:'foreward'}
+				for(let i=headI+1;i!=headI;i++){
+					if(i===self.paths[pathI].length)
+						i=0
+					if(self.paths[pathI][i]===anotherPoint){
+						for(let j=headI-1;j!=headI;j--){
+							if(i===self.paths[pathI].length)
+								i=0//dfafsddfd
+							if(self.paths[pathI][j]===point2B){
+								point1ToPath2.i = j
+								point1ToPath2.isForeward = false
+								break
+							}
+							if(self.paths[pathI][j]===point2F){
+								point1ToPath2.i = j
+								break
+							}
+							point1ToPath2.direction = 'backward'
+						}
+						break
+					}
+					if(self.paths[pathI][i]===point2B){
+						point1ToPath2.i = i
+						point1ToPath2.isForeward = false
+						break
+					}
+					if(self.paths[pathI][i]===point2F){
+						point1ToPath2.i = i
+						break
+					}
+				}
+				return point1ToPath2
+			}
+			let point1FToPath2 = toAnotherPath(headFI,point1B)
+			let point1BToPath2 = toAnotherPath(headBI,point1F)
+
+			let points = []
+			if(point1FToPath2.direction==='foreward'){
+				points = path1.backward.getList().concat(gatherForeward(self.paths[pathI],headFI,point1FToPath2.i))
+				let path2Points = []
+				if(point1FToPath2.isForeward)
+					path2Points = path2.foreward.getList()
+				else
+					path2Points = path2.backward.getList()
+				points = points.concat(path2Points)
+				points = points.concat(gatherForeward(self.paths[pathI],point1BToPath2.i+1,headBI-1))
+			}else{
+				points = gatherForeward(self.paths[pathI],point1FToPath2.i+1,headFI-1).concat(path1.foreward.getList())
+				let path2Points = []
+				if(point1FToPath2.isForeward)
+					path2Points = path2.backward.getList()
+				else
+					path2Points = path2.foreward.getList()
+				points = path2Points.concat(points)
+				points = points.concat(gatherForeward(self.paths[pathI],headBI,point1BToPath2.i))
+			}
+			let pointsP = ''
+			for(let point of points)
+				pointsP += 'L'+point.x+','+point.y
+			pointsP = 'M'+pointsP.slice(1)+'Z'
+			self.pickedSites[0].arr.pointsP = pointsP
+			let arrShape = self.document.createElementNS(self.xmlns,'path')
+			arrShape.setAttribute('d', pointsP)
+			/*arrShape.setAttribute('fill', '#9BAF60')
+			arrShape.setAttribute('opacity', '.7')*/
+			arrShape.setAttribute('fill', 'none')
+			arrShape.setAttribute('stroke-width', '.5')
+			arrShape.setAttribute('stroke', '#9BAF60')
+
+			self.svg.nativeElement.appendChild(arrShape)
+			console.log('print points of arr',self.pickedSites[0].arr_id)
+			console.log(`{arr_id: ${self.pickedSites[0].arr.arr_id},d: '${pointsP}'}`)
+		}
+		function gatherForeward(path,i,j){
+			let l = []
+			for(;i!==j;i++){
+				if(i===path.length)
+					i=0
+				l.push(path[i])
+			}
+			l.push(path[j])
 			return l
+		}
+		for(let shapes of self.pickedSites[0].arr.pathShapes){
+			self.svg.nativeElement.removeChild(shapes[0])
+			self.svg.nativeElement.removeChild(shapes[1])
+			self.svg.nativeElement.removeChild(shapes[2])
 		}
 	}
 	transform(d){
@@ -372,6 +498,10 @@ export class DrawToolComponent implements OnInit {
 		}
 	}
 	setEdgePoint(self,direction){
+		if(self.pickedSites.length!==2){
+			alert('pick two')
+			return
+		}
 		let site1 = self.pickedSites[0]
 		let site2 = self.pickedSites[1]
 
@@ -401,7 +531,7 @@ export class DrawToolComponent implements OnInit {
 		  let x__ = (y_*(y-points[0]['y'])+x_*points[0]['x'])/x_
 		  return x__
 		}
-
+		self.pickedSites = []
 		if(direction==='N'){
 			let l = {}, ys = []
 			for(let points of xTwoPoints){
@@ -480,11 +610,37 @@ export class DrawToolComponent implements OnInit {
 		self.setEdgePoint(self,'S')
 	}
 	toFront(self){
-		let shapes = self.pickedSites[0].arr.shapes
-		this.svg.nativeElement.appendChild(shapes[0])
-		this.svg.nativeElement.appendChild(shapes[1])
-		this.svg.nativeElement.appendChild(shapes[2])
+		if(self.pickedSites.length===0){
+			alert('pick arr')
+			return
+		}
+		let pathShapes = self.pickedSites[0].arr.pathShapes
+		for(let shapes of pathShapes){
+			this.svg.nativeElement.appendChild(shapes[0])
+			this.svg.nativeElement.appendChild(shapes[1])
+			this.svg.nativeElement.appendChild(shapes[2])
+		}
+		self.pickedSites = []
 	}
+	changePickRule(e, self){
+		if(self.pickRule==='default'){
+			e.target.setAttribute('fill',"#A70000")
+			self.pickRule = 'line to edge'
+		}
+		else if(self.pickRule==='line to edge'){
+			e.target.setAttribute('fill',"#FFF")
+			self.pickRule = 'default'
+		}
+	}
+	morePath(self){
+		self.pickedSites[0].arr.moveHead = null
+		alert(`you have setup for a new path of arr${self.pickedSites[0].arr_id}`)
+		self.pickedSites = []
+	}
+	lineToEdge(self){
+
+	}
+
 
 
 	mouseenter(event){

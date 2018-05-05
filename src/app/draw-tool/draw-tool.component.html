@@ -50,10 +50,16 @@
 		 (dblclick)='toEast(this)'>E</text>
 
 		<text x='19' y='16' style='font-weight: bold;' font-size='3' fill="#FFF"
-		 >{{pickedSites.length}}</text>
+		 (dblclick)='changePickRule($event,this)'>{{pickedSites.length}}</text>
 
 		<text x='6' y='16' style='font-weight: bold;' font-size='3' fill="#FFF"
 		 (dblclick)='toFront(this)'>Fr</text>
+
+		<text x='23' y='7' style='font-weight: bold;' font-size='3' fill="#FFF"
+		 (dblclick)='lineToEdge(this)'>LiTo</text>
+
+		<text x='23' y='16' style='font-weight: bold;' font-size='3' fill="#FFF"
+		 (dblclick)='morePath(this)'>New</text>
 		
 
 	</svg>
