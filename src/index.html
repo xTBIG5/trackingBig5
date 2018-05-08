@@ -2,13 +2,191 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Map</title>
+  <title>TB5</title>
   <base href="/">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.11/css/all.css" integrity="sha384-p2jx59pefphTFIpeqCcISO9MdVfIm4pNnsL08A6v5vaQc4owkQqxMV8kg4Yvhaw/" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="assets/css/fontawesome.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/fontawesome.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/styles.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
-  <app-root></app-root>
+    <header id="header" class="header">
+
+        <div class="header-menu">
+
+            <div class="col-md-offset-3 col-sm-7 col-xs-9 clearfix">
+                <form class="m-header-search__form">
+                    <div class="m-header-search__wrapper">
+                        <span class="m-header-search__icon-search" >
+                            <i class="fas fa-search"></i>
+                        </span>
+                        <span class="m-header-search__input-wrapper">
+                            <input autocomplete="off" type="text"  class="m-header-search__input" value="" placeholder="Search..." id="m_quicksearch_input">
+                        </span>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-sm-2 col-xs-3">
+                <div class="user-area dropdown float-right">
+                    <span>À nhon admin</span>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img class="user-avatar rounded-circle" src="assets/images/admin.jpg" alt="User Avatar">
+                    </a>
+
+                    <div class="user-menu dropdown-menu">
+                        <a class="nav-link" href="#">
+                            <i class="fa fa- user"></i>My Profile</a>
+                        <a class="nav-link" href="#">
+                            <i class="fa fa-power -off"></i>Logout</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </header>
+  <app-root></app-root>    <script src="assets/js/jquery-3.2.1.min.js"></script>
+    <script src="assets/js/bootstrap.js"></script>
+    <script src="assets/js/select2.js"></script>
+    <!-- <script src="assets/js/sliderranger.js"></script> -->
+    <script src="assets/js/main.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#slider").slider({
+                range: "min",
+                animate: true,
+                value: 1,
+                min: 0,
+                max: 1000,
+                step: 10,
+                slide: function (event, ui) {
+                    update(1, ui.value); //changed
+                }
+            });
+            //Added, set initial value.
+            $("#amount").val(0);
+            $("#amount-label").text(0);
+            update();
+        });
+
+        $(document).ready(function () {
+            $("#slider1_1").slider({
+                range: "min",
+                animate: true,
+                value: 1,
+                min: 0,
+                max: 1000,
+                step: 10,
+                slide: function (event, ui) {
+                    update1_1(1, ui.value); //changed
+                }
+            });
+            //Added, set initial value.
+            $("#amount1_1").val(0);
+            $("#amount1_1-label").text(0);
+            update1_1();
+        });
+
+        $(document).ready(function () {
+            $("#slider_3").slider({
+                range: "min",
+                animate: true,
+                value: 1,
+                min: 0,
+                max: 1000,
+                step: 10,
+                slide: function (event, ui) {
+                    update_3(1, ui.value); //changed
+                }
+            });
+            //Added, set initial value.
+            $("#amount_3").val(0);
+            $("#amount_3-label").text(0);
+            update_3();
+        });
+
+        $(document).ready(function () {
+            $("#slider_2").slider({
+                range: "min",
+                animate: true,
+                value: 1,
+                min: 0,
+                max: 1000,
+                step: 10,
+                slide: function (event, ui) {
+                    update_2(1, ui.value); //changed
+                }
+            });
+            //Added, set initial value.
+            $("#amount_2").val(0);
+            $("#amount_2-label").text(0);
+            update_2();
+        });
+
+        $(document).ready(function () {
+            $("#slider_4").slider({
+                range: "min",
+                animate: true,
+                value: 1,
+                min: 0,
+                max: 1000,
+                step: 10,
+                slide: function (event, ui) {
+                    update_4(1, ui.value); //changed
+                }
+            });
+            //Added, set initial value.
+            $("#amount_4").val(0);
+            $("#amount_4-label").text(0);
+            update_4();
+        });
+
+        //----------------------
+        function update(slider, val) {
+            var $amount = slider == 1 ? val : $("#amount").val();
+            $("#amount").val($amount);
+            $("#amount-label").text($amount);
+
+            $('#slider a').html('<label>' + $amount + '</label><div class="ui-slider-label-inner"></div>');
+        }
+
+        function update1_1(slider, val) {
+            var $amount1_1 = slider == 1 ? val : $("#amount1_1").val();
+            $("#amount1_1").val($amount1_1);
+            $('#slider1_1 a').html('<label>' + $amount1_1 + '</label><div class="ui-slider-label-inner"></div>');
+        }
+
+        function update_2(slider, val) {
+            var $amount_2 = slider == 1 ? val : $("#amount_2").val();
+            $("#amount_2").val($amount_2);
+
+            $('#slider_2 a').html('<label>' + $amount_2 + '</label><div class="ui-slider-label-inner"></div>');
+        }
+
+        function update_3(slider, val) {
+            var $amount_3 = slider == 1 ? val : $("#amount_3").val();
+            $("#amount_3").val($amount_3);
+
+            $('#slider_3 a').html('<label>' + $amount_3 + '</label><div class="ui-slider-label-inner"></div>');
+        }
+
+        function update_4(slider, val) {
+            var $amount_4 = slider == 1 ? val : $("#amount_4").val();
+            $("#amount_4").val($amount_4);
+
+            $('#slider_4 a').html('<label>' + $amount_4 + '</label><div class="ui-slider-label-inner"></div>');
+        }
+
+
+    </script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+
 </body>
 </html>
