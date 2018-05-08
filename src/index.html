@@ -1,20 +1,21 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>TB5</title>
-  <base href="/">
-	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.11/css/all.css" integrity="sha384-p2jx59pefphTFIpeqCcISO9MdVfIm4pNnsL08A6v5vaQc4owkQqxMV8kg4Yvhaw/" crossorigin="anonymous">
-	<link rel="stylesheet" type="text/css" href="assets/css/fontawesome.css">
-	<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css">
-	<link rel="stylesheet" type="text/css" href="assets/css/fontawesome.css">
-	<link rel="stylesheet" type="text/css" href="assets/css/styles.css">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+<head>
+    <meta charset="utf-8">
+    <title>TB5</title>
+    <base href="/">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.11/css/all.css" integrity="sha384-p2jx59pefphTFIpeqCcISO9MdVfIm4pNnsL08A6v5vaQc4owkQqxMV8kg4Yvhaw/" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="assets/css/fontawesome.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/fontawesome.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/styles.css">
+
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
+
 <body>
     <header id="header" class="header">
 
@@ -51,7 +52,9 @@
             </div>
         </div>
     </header>
-  <app-root></app-root>    <script src="assets/js/jquery-3.2.1.min.js"></script>
+    <app-root></app-root>
+
+    <script src="assets/js/jquery-3.2.1.min.js"></script>
     <script src="assets/js/bootstrap.js"></script>
     <script src="assets/js/select2.js"></script>
     <!-- <script src="assets/js/sliderranger.js"></script> -->
@@ -73,6 +76,60 @@
             $("#amount").val(0);
             $("#amount-label").text(0);
             update();
+        });
+
+        $(document).ready(function () {
+            $("#slider11").slider({
+                range: "min",
+                animate: true,
+                value: 1,
+                min: 0,
+                max: 1000,
+                step: 10,
+                slide: function (event, ui) {
+                    update11(1, ui.value); //changed
+                }
+            });
+            //Added, set initial value.
+            $("#amount11").val(0);
+            $("#amount11-label").text(0);
+            update11();
+        });
+
+         $(document).ready(function () {
+            $("#slider12").slider({
+                range: "min",
+                animate: true,
+                value: 1,
+                min: 0,
+                max: 1000,
+                step: 10,
+                slide: function (event, ui) {
+                    update12(1, ui.value); //changed
+                }
+            });
+            //Added, set initial value.
+            $("#amount12").val(0);
+            $("#amount12-label").text(0);
+            update12();
+        });
+
+         $(document).ready(function () {
+            $("#slider13").slider({
+                range: "min",
+                animate: true,
+                value: 1,
+                min: 0,
+                max: 1000,
+                step: 10,
+                slide: function (event, ui) {
+                    update13(1, ui.value); //changed
+                }
+            });
+            //Added, set initial value.
+            $("#amount13").val(0);
+            $("#amount13-label").text(0);
+            update13();
         });
 
         $(document).ready(function () {
@@ -156,6 +213,24 @@
             $('#slider a').html('<label>' + $amount + '</label><div class="ui-slider-label-inner"></div>');
         }
 
+        function update11(slider, val) {
+            var $amount11 = slider == 1 ? val : $("#amount11").val();
+            $("#amount11").val($amount11);
+            $('#slider11 a').html('<label>' + $amount11 + '</label><div class="ui-slider-label-inner"></div>');
+        }
+
+         function update12(slider, val) {
+            var $amount12 = slider == 1 ? val : $("#amount12").val();
+            $("#amount12").val($amount12);
+            $('#slider12 a').html('<label>' + $amount12 + '</label><div class="ui-slider-label-inner"></div>');
+        }
+
+        function update13(slider, val) {
+            var $amount13 = slider == 1 ? val : $("#amount13").val();
+            $("#amount13").val($amount13);
+            $('#slider13 a').html('<label>' + $amount13 + '</label><div class="ui-slider-label-inner"></div>');
+        }
+
         function update1_1(slider, val) {
             var $amount1_1 = slider == 1 ? val : $("#amount1_1").val();
             $("#amount1_1").val($amount1_1);
@@ -189,4 +264,5 @@
     <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
 
 </body>
+
 </html>
