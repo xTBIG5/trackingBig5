@@ -21,7 +21,7 @@
             width: 200px;
 			height: 100px;
 			background: #DF786F;
-			text-align: center;
+			text-align: left;
 			padding: 100px;
 			color: #fff;
 			-moz-border-radius: 200px;
@@ -36,7 +36,7 @@
 			width: 200px;
 			height: 200px;
 			background: #CAD35C;
-			text-align: center;
+			text-align: left;
 			padding: 100px;
 			color: #fff;
 			-moz-border-radius: 200px;
@@ -45,8 +45,8 @@
 		}
         .circle3 {
         	position: absolute;
-    		left: 430px;
-    		top: 570px;
+    		left: 450px;
+    		top: 620px;
 			width: 200px;
 			width: 200px;
 			height: 200px;
@@ -61,7 +61,7 @@
         .circle4 {
         	position: absolute;
     		left: 130px;
-    		top: 570px;
+    		top: 620px;
 			width: 200px;
 			width: 200px;
 			height: 200px;
@@ -75,7 +75,7 @@
 		}
         .circle5 {
         	position: absolute;
-    		left: 270px;
+    		left: 330px;
     		top: 400px;
 			width: 200px;
 			width: 200px;
