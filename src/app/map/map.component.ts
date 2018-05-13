@@ -10,6 +10,7 @@ import { Big5 } from '../share/big5';
 export class MapComponent implements OnInit, AfterViewInit {
   big5Collection: any;
   big5s:any;
+  region_population = []
 
   latitude_   :number;
   longitude_  :number;
@@ -27,10 +28,19 @@ export class MapComponent implements OnInit, AfterViewInit {
   constructor( private mapService: MapService ) { }
 
   ngOnInit() {
+    this.getRegionPopulation()
   }
 
   ngAfterViewInit() {
        console.log("do after init");
+  }
+
+  getRegionPopulation(): void {
+    this.mapService.getRegionPopulation()
+    .subscribe(population => {
+      this.region_population = population;
+      this.embedFuncs()
+    });
   }
 
   getBig5s(collectBig5): void {
@@ -38,7 +48,7 @@ export class MapComponent implements OnInit, AfterViewInit {
     .subscribe(collection => {
       this.big5Collection = collection;
       this.big5s = collectBig5(collection)
-      this.doParty();
+      //this.doParty();
     });
   }
 
@@ -47,7 +57,48 @@ export class MapComponent implements OnInit, AfterViewInit {
     this.big5s = collectBig5(this.mapService.getBig5sTest())
 
   }
- 
+
+  embededFuncs = {
+    getRegionPopulationRate(searcher){
+      let count = 0
+      for(let arr of this.arrs)
+        count += arr.checkArrPopulation(searcher)
+      return count/this.population
+    },
+    checkArrPopulation(searcher){
+      let count = 0
+      for(let site of this.sites)
+        count += site.checkSitePopulation(searcher)
+      return count
+    },
+    getArrPopulationRate(searcher){
+      return this.checkArrPopulation(searcher)/this.population
+    },
+    checkSitePopulation(searcher){
+      let count = 0
+      for(let big5 of this.users)
+        if(searcher.checkOut(big5))
+          count += 1
+      return count
+    },
+    getSitePopulationRate(searcher){
+      return this.checkSitePopulation(searcher)/this.population
+    }
+  }
+
+  embedFuncs(){
+    for(let region of this.region_population){
+      region.getRegionPopulationRate = this.embededFuncs.getRegionPopulationRate
+      for(let arr of region.arrs){
+        arr.checkArrPopulation = this.embededFuncs.checkArrPopulation
+        arr.getArrPopulationRate = this.embededFuncs.getArrPopulationRate
+        for(let site of arr.sites){
+          site.checkSitePopulation = this.embededFuncs.checkSitePopulation
+          site.getSitePopulationRate = this.embededFuncs.getSitePopulationRate
+        }
+      }
+    }
+  }
 
   doParty(speed=25,step=10,showWhat='highestdimensionDegree'){
 
@@ -65,7 +116,7 @@ export class MapComponent implements OnInit, AfterViewInit {
     }
 
     let dressUpBig5ShowOneDegreeDimension = (big5) => {
-      let type=1, size=0.6
+      let type=1, size=2
       let dresses = [
         {size:size, type:type, color:this.colors[0]},
         {size:size, type:type, color:this.colors[1]},

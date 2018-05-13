@@ -27,6 +27,14 @@ export class MapService {
         catchError(this.handleError('getBig5s', []))
       );
   }
+  getRegionPopulation() {
+    return this.http.get("/api/region_population")
+      .map(result => result.json().data)
+      .pipe(
+        tap(population => console.log(population[0])),
+        catchError(this.handleError('getRegionPopulation', []))
+      );
+  }
 
   shuffle(array) {
     let counter = array.length;

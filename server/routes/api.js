@@ -29,16 +29,31 @@ let response = {
 // Get users
 router.get('/big5s', (req, res) => {
     connection((db) => {
-        db.db('tbig5').collection('big5s')
+        db.db('tbig5').collection('region_population')
             .find()
             .toArray()
-            .then((big5s) => {
-                response.data = big5s;
-                console.log(big5s[5]);
+            .then((population) => {
+                response.data = population;
+                console.log(population[5]);
                 res.json(response);
             })
             .catch((err) => {
                 sendError(err, res);
+            });
+    });
+});
+router.get('/big5/:id', (req, res) => {
+    connection((db) => {
+        db.db('myapp').collection('big5_degree_percent')
+            .findOne({_id:+req.params['id']})
+            .then((big5) => {
+                response.data = big5;
+                console.log(big5);
+                res.json(response);
+            })
+            .catch((err) => {
+                sendError(err, res);
+                console.log(err);
             });
     });
 });

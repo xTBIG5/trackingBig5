@@ -1,15 +1,11 @@
-<svg height="2400" version="1.1" width="6516.8" xmlns="http://www.w3.org/2000/svg" style="overflow: hidden; position: relative; left: -0.850006px;" viewBox=".4000267857142289 -1.40002678571428574 407.30000000000007 299.96756051587306" preserveAspectRatio="xMinYMin" fill="#E7EAEB" >
-	<rect x="-4" y="-4" width="814.6" height="600" fill-opacity=".6"  />
+<svg 	height="600" width="814.6" fill="#030204" draggable="false">
+	<rect #rect x="-4" y="-4" width="814.6" height="600" fill-opacity=".6" draggable="false" />
+	<svg #svg height="600" version="1.1" width="814.6" xmlns="http://www.w3.org/2000/svg" style="overflow: hidden; position: relative; left: -0.850006px;" viewBox=".4000267857142289 -1.40002678571428574 407.30000000000007 299.96756051587306" preserveAspectRatio="xMinYMin" transform="scale(1)matrix(1 0 0 1 0 0)" (mousedown)="selectSVG($event)" (wheel)='onWheel($event)' draggable="false"> 
 
-  	<path class='path' *ngFor='let d of pathShapes; index as i' attr.fill="{{hover[i]}}" (mouseenter)='mouseenter(i)' (mouseleave)='mouseleave(i)'  attr.d={{d}}  transform="matrix(0.4041,0,0,0.4041,0,0)" />
-	<desc>Created with Raphaël 2.1.0</desc>
-	
-	<ng-container *ngFor= "let big5 of map.big5s">
-	<polygon *ngIf="big5.collection"
-	 attr.points="{{big5.collection.shapePoints}}"
-	 attr.fill="{{big5.collection.dress.color}}"
-	 (mouseenter)="map.mouseenter($event, big5).bind(map)"
-	 (mouseleave)="map.mouseleave($event, big5).bind(map)"/>
-	</ng-container>
+		<desc>Created with Raphaël 2.1.0</desc>
+		
+		
+		
+	</svg>
+
 </svg>
-

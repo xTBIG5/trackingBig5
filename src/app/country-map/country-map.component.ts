@@ -1,5 +1,7 @@
-import { Component, OnInit, Input} from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Inject} from '@angular/core';
 import { MapComponent } from '../map/map.component';
+import { DOCUMENT } from '@angular/common';
+
 @Component({
   selector: 'tb-country-map',
   templateUrl: './country-map.component.html',
@@ -7,12 +9,21 @@ import { MapComponent } from '../map/map.component';
 })
 export class CountryMapComponent implements OnInit {
   @Input() map: MapComponent;
+  @ViewChild('svg') svg:any
+  xmlns = 'http://www.w3.org/2000/svg'
 
   hover = ['#C6BF9D','#C6BF9D','#C6BF9D','#C6BF9D','#C6BF9D','#C6BF9D','#C6BF9D',
             '#C6BF9D','#C6BF9D','#C6BF9D','#C6BF9D','#C6BF9D','#C6BF9D','#C6BF9D',]
   pathShapes = []
+  currentX = 0
+  currentY = 0
+  xMatrix = 0
+  yMatrix = 0
 
-  constructor() { }
+  constructor(@Inject(DOCUMENT) private  document: any) { 
+    this.moveSVG = this.moveSVG.bind(this)
+    this.deselectSVG = this.deselectSVG.bind(this)
+  }
 
   ngOnInit() {
     this.pathShapes = this.getPathShapes()
@@ -28,229 +39,122 @@ export class CountryMapComponent implements OnInit {
 
     //testdata
     this.map.getBig5sTest(this.getCountryMapCollection)
-
+    
     /*if(this.map.big5Collection)
       this.map.big5s = this.getCountryMapCollection(this.map.big5Collection)
     else
       this.map.getBig5s(this.getCountryMapCollection)*/
-
-    this.testArr()
-
-    /*let l = []
-    for(let big5 of this.map.big5s)
-      if(big5.arr_id%6===4){
-          big5.O = 1
-          big5.C = 1
-          big5.E = 1
-          big5.A = 1
-          big5.N = 3
-         l.push(big5)
-        }
-
-    l = this.rounding(l)
-    for(let big5 of l){
-        big5.O = 1
-        big5.C = 3
-        big5.E = 1
-        big5.A = 1
-        big5.N = 3
-      }*/
     this.map.doParty()
-  }
-
-  rounding(l){
-    /*let l = []
-    let arr_id = this.map.big5s[0].arr_id
-    for(let big5 of this.map.big5s)
-      if(arr_id===big5.arr_id)
-        l.push(big5)*/
-
-    for(let big5 of l){
-      big5.x = this.map.convertToX(big5.lon)
-      big5.y = this.map.convertToY(big5.lat)
-    }
-
-    let northestBig5 = l[0]
-    for(let big5 of l)
-      if(northestBig5.y>big5.y)
-        northestBig5 = big5
-
-    let southestBig5 = l[0]
-    for(let big5 of l)
-      if(southestBig5.y<big5.y)
-        southestBig5 = big5
-
-    let i =0
-    while(l[i]===northestBig5 || l[i]===southestBig5)
-      i++
-    let westestBig5 = l[i]
-    for(let big5 of l)
-      if(westestBig5.x>big5.x && big5!==northestBig5 && big5!==southestBig5)
-        westestBig5 = big5
-
-    let boundBig5s = []
-    boundBig5s.push(westestBig5)
-    console.log('west',westestBig5)
-
-    let edgeBig5  = westestBig5
-    edgingUP(northestBig5)
-
-    console.log('south', southestBig5)
-    console.log("noth",northestBig5)
-    boundBig5s.push(northestBig5)
-    edgeBig5 = northestBig5
-    edgingDown()
-    boundBig5s.push(southestBig5)
-    edgeBig5 = southestBig5
-    edgingUP(westestBig5)
-
-    return boundBig5s
-
-    function edgingUP(delimit){
-      while(edgeBig5!==delimit){
-        let [nearestBig5, nearestEdgeBig5] = twoNearestBig5s(edgeBig5,'up')
-        
-        if(nearestEdgeBig5){
-          //identify detaile of arrondissement boundary
-          if(nearestEdgeBig5.y>=nearestBig5.y || (nearestBig5.y-nearestEdgeBig5.y)<(edgeBig5.y-nearestBig5.y)/2){
-            boundBig5s.push(nearestEdgeBig5)
-            edgeBig5 = nearestEdgeBig5
-            continue
-          }
-          /*else if(){
-            boundBig5s.push(nearestEdgeBig5)
-            edgeBig5 = nearestEdgeBig5
-            continue
-          }*/
-        }
-        boundBig5s.push(nearestBig5)
-        edgeBig5 = nearestBig5
-        
-      }
-    }
-
-    function edgingDown(){
-      while(edgeBig5!==southestBig5){
-        let [nearestBig5, nearestEdgeBig5] = twoNearestBig5s(edgeBig5,'down')
-        if(nearestEdgeBig5)
-        //identify detaile of arrondissement boundary
-          if(nearestEdgeBig5.y<=nearestBig5.y || (-nearestBig5.y+nearestEdgeBig5.y)<-(edgeBig5.y-nearestBig5.y)/2){
-            boundBig5s.push(nearestEdgeBig5)
-            edgeBig5 = nearestEdgeBig5
-            continue
-          }
-        //identify detaile of arrondissement boundary
-        /*else if(){
-          boundBig5s.push(nearestEdgeBig5)
-          edgeBig5 = nearestEdgeBig5
-        }*/
-        boundBig5s.push(nearestBig5)
-        edgeBig5 = nearestBig5
-      }
-    }
-
-    function twoNearestBig5s(big5_root,direction){
-      let distantList = []
-      let c1=0
-      let c2=0
-      if(direction==='up')
-        for(let big5 of l){
-          if(big5!==big5_root && big5.y<=big5_root.y){
-            c1++
-            distantList.push(big5)
-            big5.distant = Math.pow((big5.x-big5_root.x),2)+Math.pow((big5.y-big5_root.y),2)
-          }
-        }
-      else
-        for(let big5 of l)
-          if(big5!==big5_root && big5.y>=big5_root.y){
-            c2++
-            distantList.push(big5)
-            big5.distant = Math.pow((big5.x-big5_root.x),2)+Math.pow((big5.y-big5_root.y),2)
-          }
-      let nearestBig5 = distantList[0]
-      for(let big5 of distantList)
-        if(big5.distant<nearestBig5.distant)
-          nearestBig5 = big5
-
-      let edgeList = []
-      if(direction==='up'){
-        for(let big5 of distantList)
-          if(big5.x<nearestBig5.x)
-            edgeList.push(big5)
-      }else
-        for(let big5 of distantList)
-          if(big5.x>nearestBig5.x)
-            edgeList.push(big5)
-      let nearestEdgeBig5 = edgeList[0]
-      if(direction==='up'){
-        for(let big5 of edgeList)
-          if(nearestEdgeBig5.y<big5.y)
-            nearestEdgeBig5 = big5
-      }else
-        for(let big5 of edgeList)
-          if(nearestEdgeBig5.y>big5.y)
-            nearestEdgeBig5 = big5
-      return [nearestBig5, nearestEdgeBig5]
-    }
-
-
-  }
-
-  testArr(){
-    let big5s = []
-    for(let big5 of this.map.big5s){
-      if(big5.arr_id%6===2){
-        big5.O = 3
-        big5.C = 1
-        big5.E = 1
-        big5.A = 1
-        big5.N = 1
-      }
-      if(big5.arr_id%6===3){
-        big5.O = 1
-        big5.C = 3
-        big5.E = 1
-        big5.A = 1
-        big5.N = 1
-      }
-      if(big5.arr_id%6===4){
-        big5.O = 1
-        big5.C = 1
-        big5.E = 3
-        big5.A = 1
-        big5.N = 1
-      }
-      if(big5.arr_id%6===5){
-        big5.O = 1
-        big5.C = 1
-        big5.E = 1
-        big5.A = 3
-        big5.N = 1
-      }
-      if(big5.arr_id%6===0){
-          big5.O = 1
-          big5.C = 1
-          big5.E = 1
-          big5.A = 1
-          big5.N = 3
-        }
-      if(big5.arr_id%6===1){
-        big5.O = 1
-        big5.C = 3
-        big5.E = 1
-        big5.A = 1
-        big5.N = 3
-      }
-     /* big5s.push(big5)}
-    console.log(big5s.length)
-    return big5s*/
-    }
   }
 
   getCountryMapCollection(collection){
 
     return collection
+  }
+/*<path class='path' *ngFor='let d of pathShapes; index as i' 
+attr.fill="{{hover[i]}}" (mouseenter)='mouseenter(i)' (mouseleave)='mouseleave(i)' 
+ attr.d={{d}}  transform="matrix(0.4041,0,0,0.4041,0,0)" draggable="false"/>*/
+  showRegion(){
+    for(let i=0;i<this.pathShapes.length;i++){
+      let path = this.document.createElementNS(this.xmlns,'path')
+      path.setAttribute('d',this.pathShapes[i])
+      path.setAttribute('fill', "#A70000")
+
+      /*path.addEventListener('mouseenter', this.mouseenter.bind(this))
+      path.addEventListener('mouseleave', this.mouseleave.bind(this))*/
+
+      this.svg.nativeElement.appendChild(path)
+    }
+
+
+  }
+  showSite(){
+    for(let site of this.map.big5s){
+      let polygon = this.document.createElementNS(this.xmlns,'polygon')
+      polygon.setAttribute('points',this.map.shaping(site.lon, site.lat, 1, .6))
+      polygon.setAttribute('fill', "#A70000")
+      /*polygon.addEventListener('mouseenter', this.mouseenter.bind(this))
+      polygon.addEventListener('mouseleave', this.mouseleave.bind(this))*/
+
+      this.svg.nativeElement.appendChild(polygon)
+    }
+  }
+
+  onWheel(e){
+    let svg = this.svg.nativeElement
+    let transformStr = svg.getAttributeNS(null,'transform').split(')matrix(1 0 0 1 ')
+    let scale = transformStr[0].split('(')[1]
+    scale = parseFloat(scale)
+
+    if(e.deltaY>0){
+      if(scale<3.1)
+        scale += .05
+      else
+        return
+    }
+    else{
+      if(scale>.5)
+        scale -= .05
+      else
+        return
+    }
+    //matrix(1 0 0 1 ${-407.3*(this.scale-1)/3} ${-300*(this.scale-1)/3})let currentMatrix = svg.getAttributeNS(null, "transform").split(')matrix(1 0 0 1 ')[1].slice(0,-1).split(' ');
+    
+    svg.setAttributeNS(null,'transform','scale('+scale+')matrix(1 0 0 1 '+
+      (this.xMatrix-407.3*(scale-1)/3)+' '+(this.yMatrix-300*(scale-1)/3)+')')
+  }
+  selectSVG(event) {
+    let svg = this.svg.nativeElement
+    /*let currentMatrix = svg.getAttributeNS(null, "transform").split(')matrix(1 0 0 1 ')[1].slice(0,-1).split(' ');
+      for(let i=0; i<currentMatrix.length; i++)
+        currentMatrix[i] = parseFloat(currentMatrix[i])*/
+   /* if(svg.holdLocation){
+      svg.holdLocation.currentX = event.clientX,
+      svg.holdLocation.currentY = event.clientY
+    }else
+      svg.holdLocation = {
+        currentX:event.clientX,
+        currentY:event.clientY,
+        xMatrix:0,
+        yMatrix:0,
+      }*/
+    this.currentX = event.clientX
+    this.currentY = event.clientY
+    svg.addEventListener('mousemove', this.moveSVG)
+    svg.addEventListener('mouseout',this.deselectSVG)
+    svg.addEventListener('mouseup',this.deselectSVG)
+  }
+  moveSVG(event){
+    let svg = this.svg.nativeElement
+    let transformStr = svg.getAttributeNS(null,'transform').split('matrix(1 0 0 1 ')
+    let scale = transformStr[0]
+    let currentMatrix = transformStr[1].slice(0,-1).split(' ');
+    for(let i=0; i<2; i++)
+      currentMatrix[i] = parseFloat(currentMatrix[i])
+
+    this.xMatrix = event.clientX-this.currentX+this.xMatrix
+    this.yMatrix = event.clientY-this.currentY+this.yMatrix
+    svg.setAttributeNS(null,'transform',scale+'matrix(1 0 0 1 '+
+      (currentMatrix[0]+event.clientX-this.currentX)+' '+(currentMatrix[1]+event.clientY-this.currentY)+')')
+    this.currentX = event.clientX
+    this.currentY = event.clientY
+    /*svg.holdLocation.xMatrix = event.clientX-svg.holdLocation.currentX+svg.holdLocation.xMatrix
+    svg.holdLocation.yMatrix = event.clientY-svg.holdLocation.currentY+svg.holdLocation.yMatrix
+    svg.setAttributeNS(null,'transform',scale+'matrix(1 0 0 1 '+
+      svg.holdLocation.xMatrix+' '+svg.holdLocation.yMatrix+')')
+    svg.holdLocation.currentX = event.clientX
+    svg.holdLocation.currentY = event.clientY*/
+  }
+
+  deselectSVG(e){
+    let svg = this.svg.nativeElement
+    this.svg.nativeElement.removeEventListener('mousemove',this.moveSVG)
+    this.svg.nativeElement.removeEventListener('mouseout',this.deselectSVG)
+    this.svg.nativeElement.removeEventListener('mouseup',this.deselectSVG)
+    /*this.svg.nativeElement.removeAttributeNS(null,'onmousemove')
+    this.svg.nativeElement.removeAttributeNS(null,'onmouseout')
+    this.svg.nativeElement.removeAttributeNS(null,'onmouseup')*/
+    console.log('sfal')
   }
 
   mouseenter(index){
