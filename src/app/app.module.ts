@@ -1,10 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
-
 import { AppComponent } from './app.component';
 import { MapComponent } from './map/map.component';
 import { MapService } from './map.service';
+import { LoginComponent } from './login/login.component';
+import { UserDashboardComponent } from './user-dashboard/user-dashboard.component';
+import { AppRoutingModule } from './/app-routing.module';
+import { UserChartComponent } from './user-chart/user-chart.component';
+import { UserChartService } from './user-chart.service';
 
 //import { HttpClientModule } from '@angular/common/http';
 
@@ -32,6 +35,9 @@ import { DrawToolComponent } from './draw-tool/draw-tool.component';
     MapInforComponent,
     SceneComponent,
     DrawToolComponent,
+    LoginComponent,
+    UserDashboardComponent,
+    UserChartComponent
 
   ],
   imports: [
@@ -46,9 +52,12 @@ import { DrawToolComponent } from './draw-tool/draw-tool.component';
     MatFormFieldModule,
     MatInputModule,
     BrowserAnimationsModule,
+    BrowserModule,
+    AppRoutingModule
   ],
   providers: [
   	MapService,
+    UserChartService,
 
   ],
   bootstrap: [AppComponent]
