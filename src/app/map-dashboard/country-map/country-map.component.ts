@@ -11,6 +11,7 @@ export class CountryMapComponent implements OnInit {
   @Input() map: MapComponent;
   @ViewChild('svg') svg:any
   xmlns = 'http://www.w3.org/2000/svg'
+  regions = []
 
   hover = ['#C6BF9D','#C6BF9D','#C6BF9D','#C6BF9D','#C6BF9D','#C6BF9D','#C6BF9D',
             '#C6BF9D','#C6BF9D','#C6BF9D','#C6BF9D','#C6BF9D','#C6BF9D','#C6BF9D',]
@@ -26,6 +27,7 @@ export class CountryMapComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.map.mapComponent = this
     this.pathShapes = this.getPathShapes()
 
     this.map.latitude_    = 14.5;
@@ -44,7 +46,8 @@ export class CountryMapComponent implements OnInit {
       this.map.big5s = this.getCountryMapCollection(this.map.big5Collection)
     else
       this.map.getBig5s(this.getCountryMapCollection)*/
-    this.map.doParty()
+    this.showRegions()
+    this.showSite()
   }
 
   getCountryMapCollection(collection){
@@ -53,31 +56,69 @@ export class CountryMapComponent implements OnInit {
   }
 /*<path class='path' *ngFor='let d of pathShapes; index as i' 
 attr.fill="{{hover[i]}}" (mouseenter)='mouseenter(i)' (mouseleave)='mouseleave(i)' 
- attr.d={{d}}  transform="matrix(0.4041,0,0,0.4041,0,0)" draggable="false"/>*/
-  showRegion(){
+ attr.d={{d}}  transform="" draggable="false"/>*/
+  showRegions(){
     for(let i=0;i<this.pathShapes.length;i++){
       let path = this.document.createElementNS(this.xmlns,'path')
       path.setAttribute('d',this.pathShapes[i])
-      path.setAttribute('fill', "#A70000")
+      path.setAttribute('fill', "#123123")
+      path.setAttribute('transform', "matrix(0.4041,0,0,0.4041,0,0)")
+      path.setAttribute('class', "path")
 
       /*path.addEventListener('mouseenter', this.mouseenter.bind(this))
       path.addEventListener('mouseleave', this.mouseleave.bind(this))*/
 
       this.svg.nativeElement.appendChild(path)
-    }
+      this.regions.push(path)
+  }
 
 
   }
   showSite(){
     for(let site of this.map.big5s){
       let polygon = this.document.createElementNS(this.xmlns,'polygon')
-      polygon.setAttribute('points',this.map.shaping(site.lon, site.lat, 1, .6))
+      polygon.setAttribute('points',this.map.shaping(site.lon, site.lat, 1, 1))
       polygon.setAttribute('fill', "#A70000")
       /*polygon.addEventListener('mouseenter', this.mouseenter.bind(this))
       polygon.addEventListener('mouseleave', this.mouseleave.bind(this))*/
 
       this.svg.nativeElement.appendChild(polygon)
     }
+  }
+
+  degreeing(searcher){
+    let percents = []
+    for(let i=0;i<this.regions.length;i++){
+      percents.push(this.map.regionPopulation[i].getRegionPopulationRate(searcher))
+    }
+    let min = percents[0]
+    let max = percents[0]
+    for(let i=0;i<percents.length;i++){
+      if(percents[i]<min)
+        min = percents[i]
+      if(percents[i]>max)
+        max = percents[i]
+    }
+    let delta = max - min
+    for(let i=0;i<percents.length;i++)
+      percents[i] = (percents[i]-min)/delta*100
+
+    for(let i=0;i<this.regions.length;i++){
+      this.regions[i].setAttribute('fill', "#"+this.reLightenColor('001530',percents[i]))
+    }
+  }
+
+  reLightenColor(color, percent) {
+    percent = 100-percent
+    var num = parseInt(color,16),
+    amt = Math.round(2.55 * percent),
+    R = (num >> 16) + amt,
+    B = (num >> 8 & 0x00FF) + amt,
+    G = (num & 0x0000FF) + amt;
+    console.log('percent', percent)
+    //LightenColor('A70000',80)
+
+    return (0x1000000 + (R<255?R<1?0:R:255)*0x10000 + (B<255?B<1?0:B:255)*0x100 + (G<255?G<1?0:G:255)).toString(16).slice(1);
   }
 
   onWheel(e){

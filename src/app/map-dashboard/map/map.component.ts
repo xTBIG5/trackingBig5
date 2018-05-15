@@ -1,6 +1,5 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { MapService } from '../map.service';
-import { Big5 } from '../share/big5';
+import { MapService } from '../../map.service';
 
 @Component({
   selector: 'tb-map',
@@ -8,9 +7,10 @@ import { Big5 } from '../share/big5';
   styleUrls: ['./map.component.css']
 })
 export class MapComponent implements OnInit, AfterViewInit {
-  big5Collection: any;
-  big5s:any;
-  region_population = []
+  big5Collection: any
+  big5s:any
+  regionPopulation = []
+  mapComponent: any
 
   latitude_   :number;
   longitude_  :number;
@@ -24,7 +24,6 @@ export class MapComponent implements OnInit, AfterViewInit {
   colors = ["#04A0E3", "#E43400", '#E0D000', '#33AC00', '#7B00A7', '#A70000']
   talkingColors = ['#56CCFF', '#FF6336', '#FEF248', '#9DFF74', '#D358FF', '#FE2A2A']
 
-
   constructor( private mapService: MapService ) { }
 
   ngOnInit() {
@@ -34,11 +33,10 @@ export class MapComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
        console.log("do after init");
   }
-
   getRegionPopulation(): void {
     this.mapService.getRegionPopulation()
     .subscribe(population => {
-      this.region_population = population;
+      this.regionPopulation = population;
       this.embedFuncs()
     });
   }
@@ -77,8 +75,9 @@ export class MapComponent implements OnInit, AfterViewInit {
     checkSitePopulation(searcher){
       let count = 0
       for(let big5 of this.users)
-        if(searcher.checkOut(big5))
+        if(searcher.checkOut(big5)){
           count += 1
+        }
       return count
     },
     getSitePopulationRate(searcher){
@@ -87,7 +86,7 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   embedFuncs(){
-    for(let region of this.region_population){
+    for(let region of this.regionPopulation){
       region.getRegionPopulationRate = this.embededFuncs.getRegionPopulationRate
       for(let arr of region.arrs){
         arr.checkArrPopulation = this.embededFuncs.checkArrPopulation
@@ -252,4 +251,5 @@ export class MapComponent implements OnInit, AfterViewInit {
     event.target.setAttribute('fill', big5.collection.dress.color)
     event.target.setAttribute('points',this.shaping(big5.lon, big5.lat, big5.collection.dress.type, big5.collection.dress.size))
   }
+
 }

@@ -33,6 +33,7 @@ export class AdvanceOptionsComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+
   }
 
   isChainedBig5s(){

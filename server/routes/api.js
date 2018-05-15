@@ -27,7 +27,7 @@ let response = {
 };
 
 // Get users
-router.get('/big5s', (req, res) => {
+router.get('/region_population', (req, res) => {
     connection((db) => {
         db.db('tbig5').collection('region_population')
             .find()
