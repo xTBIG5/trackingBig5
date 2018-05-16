@@ -1,3 +1,313 @@
-<p>
-  user-dashboard works!
-</p>
+<!-- content -->
+<section class="main_content">
+
+  <ul class="nav nav-tabs">
+    <li class="active">
+      <a data-toggle="tab" href="#home">Your Big 5</a>
+    </li>
+    <li>
+      <a data-toggle="tab" href="#menu1">Your Big 5 Insight</a>
+    </li>
+  </ul>
+
+  <div class="tab-content">
+    <div id="home" class="tab-pane fade in active">
+      <div class="user_dash">
+        <div class="container">
+          <div class="row">
+            <div class="col-xs-12 chart_detail">
+              <div class="dashboard_trailer">
+                <div class="col-xs-12 title_grid text-center">
+                  <h3>The degree of your big five</h3>
+                  <hr>
+                </div>
+                <tb-user-chart></tb-user-chart>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="five_col">
+
+        <div class="container">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="dashboard_trailer">
+                <div class="row">
+                  <div class="col-xs-12 title_grid text-center">
+                    <h3>The facets of your big five</h3>
+                    <hr>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-15 col-md-3 col-sm-4 col-xs-12">
+                    <div class="col-value-slider border-orag">
+                      <div class="title_five">
+                        <h3>Openness to Experience</h3>
+                      </div>
+                      <div class="price-box col_slider_1">
+                        <span class="test_text">Numberofcontacts_call: </span>
+                        <form class="form-horizontal form-pricing" role="form">
+                          <div id="slider"></div>
+                          <input type="hidden" id="amount" class="form-control">
+
+                        </form>
+                      </div>
+    
+                      <div class="price-box col_slider_1">
+                        <span class="test_text">Interevents_call_mean:</span>
+                        <form class="form-horizontal form-pricing" role="form">
+                          <div id="slider11"></div>
+                          <input type="hidden" id="amount11" class="form-control">
+                        </form>
+                      </div>
+
+                      <div class="price-box col_slider_1">
+                        <span class="test_text">Interevents_text_mean:</span>
+                        <form class="form-horizontal form-pricing" role="form">
+                          <div id="slider12"></div>
+                          <input type="hidden" id="amount12" class="form-control">
+                        </form>
+                      </div>
+
+                      <div class="price-box col_slider_1">
+                        <span class="test_text">Daily_distance_traveled:</span>
+                        <form class="form-horizontal form-pricing" role="form">
+                          <div id="slider13"></div>
+                          <input type="hidden" id="amount13" class="form-control">
+                        </form>
+                      </div>
+
+                       <div class="price-box col_slider_1">
+                        <span class="test_text">Numberofplaces_all:</span>
+                        <form class="form-horizontal form-pricing" role="form">
+                          <div id="slider14"></div>
+                          <input type="hidden" id="amount14" class="form-control">
+                        </form>
+                      </div>
+
+                    </div>
+                  </div>
+                  <div class="col-lg-15 col-md-3 col-sm-4 col-xs-12">
+                    <div class="col-value-slider border-3">
+                      <div class="title_five">
+                        <h3>Conscientiousness</h3>
+                      </div>
+                      <div class="price-box col_slider_2">
+                        <span class="test_text">Numberofplaces_all:</span>
+                        <form class="form-horizontal form-pricing" role="form">
+                          <div id="slider1_1"></div>
+                          <input type="hidden" id="amount1_1" class="form-control">
+                        </form>
+                      </div>
+                      <div class="price-box col_slider_2">
+                        <span class="test_text">Interevents_call_mean:</span>
+                        <form class="form-horizontal form-pricing" role="form">
+                          <div id="slider1_11"></div>
+                          <input type="hidden" id="amount1_11" class="form-control">
+                        </form>
+                      </div>
+
+                       <div class="price-box col_slider_2">
+                        <span class="test_text">Interevents_text_mean:</span>
+                        <form class="form-horizontal form-pricing" role="form">
+                          <div id="slider1_12"></div>
+                          <input type="hidden" id="amount1_12" class="form-control">
+                        </form>
+                      </div>
+
+                      <div class="price-box col_slider_2">
+                        <span class="test_text">Interactions_text_mean:</span>
+                        <form class="form-horizontal form-pricing" role="form">
+                          <div id="slider1_13"></div>
+                          <input type="hidden" id="amount1_13" class="form-control">
+                        </form>
+                      </div>
+
+                      <div class="price-box col_slider_2">
+                        <span class="test_text">Numberofcontacts_text:</span>
+                        <form class="form-horizontal form-pricing" role="form">
+                          <div id="slider1_14"></div>
+                          <input type="hidden" id="amount1_14" class="form-control">
+                        </form>
+                      </div>
+
+                    </div>
+                  </div>
+                  <div class="col-lg-15 col-md-3 col-sm-4 col-xs-12">
+                    <div class="col-value-slider border-4">
+                      <div class="title_five">
+                        <h3>Extraversion</h3>
+                      </div>
+                      <div class="price-box col_slider_3">
+                        <span class="test_text">Daily_distance_traveled:</span>
+                        <form class="form-horizontal form-pricing" role="form">
+                          <div id="slider_2"></div>
+                          <input type="hidden" id="amount_2" class="form-control">
+
+                        </form>
+                      </div>
+
+                      <div class="price-box col_slider_3">
+                        <span class="test_text">Interactions_call_mean:</span>
+                        <form class="form-horizontal form-pricing" role="form">
+                          <div id="slider_21"></div>
+                          <input type="hidden" id="amount_21" class="form-control">
+
+                        </form>
+                      </div>
+
+                      <div class="price-box col_slider_3">
+                        <span class="test_text">Percentathome_all:</span>
+                        <form class="form-horizontal form-pricing" role="form">
+                          <div id="slider_22"></div>
+                          <input type="hidden" id="amount_22" class="form-control">
+
+                        </form>
+                      </div>
+
+                      <div class="price-box col_slider_3">
+                        <span class="test_text">Interactions_text_mean:</span>
+                        <form class="form-horizontal form-pricing" role="form">
+                          <div id="slider_23"></div>
+                          <input type="hidden" id="amount_23" class="form-control">
+
+                        </form>
+                      </div>
+
+                      <div class="price-box col_slider_3">
+                        <span class="test_text">Numberofcontacts_text:</span>
+                        <form class="form-horizontal form-pricing" role="form">
+                          <div id="slider_24"></div>
+                          <input type="hidden" id="amount_24" class="form-control">
+
+                        </form>
+                      </div>
+
+                    </div>
+                  </div>
+                  <div class="col-lg-15 col-md-3 col-sm-4 col-xs-12">
+                    <div class="col-value-slider border-pink">
+                      <div class="title_five">
+                        <h3>Agreeableness</h3>
+                      </div>
+                      <div class="price-box col_slider_4">
+                        <span class="test_text">Percentathome_all:</span>
+                        <form class="form-horizontal form-pricing" role="form">
+                          <div id="slider_3"></div>
+                          <input type="hidden" id="amount_3" class="form-control">
+                        </form>
+                      </div>
+
+                      <div class="price-box col_slider_4">
+                        <span class="test_text">Daily_distance_traveled:</span>
+                        <form class="form-horizontal form-pricing" role="form">
+                          <div id="slider_31"></div>
+                          <input type="hidden" id="amount_31" class="form-control">
+                        </form>
+                      </div>
+
+                      <div class="price-box col_slider_4">
+                        <span class="test_text">Numberofinteractions_call:</span>
+                        <form class="form-horizontal form-pricing" role="form">
+                          <div id="slider_32"></div>
+                          <input type="hidden" id="amount_32" class="form-control">
+                        </form>
+                      </div>
+
+                      <div class="price-box col_slider_4">
+                        <span class="test_text">Responseratetext_all:</span>
+                        <form class="form-horizontal form-pricing" role="form">
+                          <div id="slider_33"></div>
+                          <input type="hidden" id="amount_33" class="form-control">
+                        </form>
+                      </div>
+
+                      <div class="price-box col_slider_4">
+                        <span class="test_text">Numberofplaces_all:</span>
+                        <form class="form-horizontal form-pricing" role="form">
+                          <div id="slider_34"></div>
+                          <input type="hidden" id="amount_34" class="form-control">
+                        </form>
+                      </div>
+
+                    </div>
+                  </div>
+                  <div class="col-lg-15 col-md-3 col-sm-4 col-xs-12">
+                    <div class="col-value-slider border-2">
+                      <div class="title_five">
+                        <h3>Neuroticism</h3>
+                      </div>
+                      <div class="price-box col_slider_5">
+                        <span class="test_text">Daily_distance_traveled:</span>
+                        <form class="form-horizontal form-pricing" role="form">
+                          <div id="slider_4"></div>
+                          <input type="hidden" id="amount_4" class="form-control">
+
+                        </form>
+                      </div>
+
+                      <div class="price-box col_slider_5">
+                        <span class="test_text">Interevents_call_mean:</span>
+                        <form class="form-horizontal form-pricing" role="form">
+                          <div id="slider_41"></div>
+                          <input type="hidden" id="amount_41" class="form-control">
+
+                        </form>
+                      </div>
+
+                      <div class="price-box col_slider_5">
+                        <span class="test_text">Numberofplaces_all:</span>
+                        <form class="form-horizontal form-pricing" role="form">
+                          <div id="slider_42"></div>
+                          <input type="hidden" id="amount_42" class="form-control">
+
+                        </form>
+                      </div>
+
+                      <div class="price-box col_slider_5">
+                        <span class="test_text">Percentnocturnal_call:</span>
+                        <form class="form-horizontal form-pricing" role="form">
+                          <div id="slider_43"></div>
+                          <input type="hidden" id="amount_43" class="form-control">
+
+                        </form>
+                      </div>
+
+                      <div class="price-box col_slider_5">
+                        <span class="test_text">Numberofinteractions_call:</span>
+                        <form class="form-horizontal form-pricing" role="form">
+                          <div id="slider_44"></div>
+                          <input type="hidden" id="amount_44" class="form-control">
+
+                        </form>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div id="menu1" class="tab-pane fade">
+      <div class="container">
+        <div class="row">
+            <div class="circle">Openness</div>
+            <div class="circle1">Conscientiousness</div>
+            <div class="circle2">Extraversion</div>
+            <div class="circle3">Agreeableness</div>
+            <div class="circle4">Neuroticism</div>
+            <div class="circle5">Detail</div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+
+</section>

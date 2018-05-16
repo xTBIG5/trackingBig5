@@ -1,0 +1,45 @@
+<!-- 
+<div style='width: 100%'>
+<tb-scene ></tb-scene>
+</div> -->
+
+<div style='width: 100%'>
+	<div class="content_choose">
+	  <div class="checkbox_choose">
+		<mat-card>
+				<h3 >Big5 Options</h3>
+		  <mat-card-content>
+
+		    <section class="example-section">
+		      <mat-checkbox class="example-margin" [(ngModel)]="checked">Openness</mat-checkbox>
+		      <mat-checkbox class="example-margin" [(ngModel)]="indeterminate">Consciencousness</mat-checkbox>
+		      <mat-checkbox class="example-margin" [(ngModel)]="chqecked">Checked</mat-checkbox>
+		      <mat-checkbox class="example-margin" [(ngModel)]="indeterminate">Indeterminate</mat-checkbox>
+		      <mat-checkbox class="example-margin" [(ngModel)]="e">Checked</mat-checkbox>
+		    </section>
+
+		  </mat-card-content>
+		</mat-card>
+	  </div>
+	  <div class="radio_choose">
+	    <div class="radio">
+	      <label>
+	        <input type="radio" name="optradio">Option 1</label>
+	    </div>
+	    <div class="radio">
+	      <label>
+	        <input type="radio" name="optradio">Option 2</label>
+	    </div>
+	    <div class="radio">
+	      <label>
+	        <input type="radio" name="optradio">Option 2</label>
+	    </div>
+
+	  </div>
+	</div>
+	<a href="" style='float: right; color:blue'>Advance options</a>
+</div>
+
+<div style='width: 100%;clear:left'>
+	<tb-advance-options [map] = 'map'></tb-advance-options>
+</div>
