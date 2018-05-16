@@ -1,1 +1,113 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+.expand{
+  animation: expanding 1s;
+  animation-fill-mode: forwards; 
+}
+@keyframes expanding{
+  5%{transform: matrix(1,0,0,1,0,54);}
+  100%{
+    transform: matrix(1,0,0,1,-2520,260) scale(25);
+    fill: #39263F;}
+}
+
+.smile0{
+  animation: animate0 .5s;
+  animation-fill-mode: forwards; 
+}
+@keyframes animate0{
+  80%{transform: matrix(1,0,0,1,-6.3,-2.4) scale(1.06);fill: #56CCFF;}
+  100%{transform:scale(1.06); fill: #04A0E3;}
+}
+@keyframes animate1{
+  80%{transform: matrix(1,0,0,1,-6.3,-2.4) scale(1.06); fill: #FF6336;}
+  100%{transform:scale(1.06); fill: #E43400;}
+}
+.smile1{
+  animation: animate1 .5s;
+  animation-fill-mode: forwards; ;
+}
+@keyframes animate2{
+  80%{transform: matrix(1,0,0,1,-6.3,-2.4) scale(1.06); fill: #FEF248;}
+  100%{transform:scale(1.06); fill: #E0D000;}
+}
+.smile2{
+  animation: animate2 .5s;
+  animation-fill-mode: forwards; ;
+}
+@keyframes animate3{
+  80%{transform: matrix(1,0,0,1,-6.3,-2.4) scale(1.06); fill: #9DFF74;}
+  100%{transform:scale(1.06); fill: #33AC00;}
+}
+.smile3{
+  animation: animate3 .5s;
+  animation-fill-mode: forwards; ;
+}
+@keyframes animate4{
+  80%{transform: matrix(1,0,0,1,-6.3,-2.4) scale(1.06); fill: #D358FF;}
+  100%{transform:scale(1.06); fill: #7B00A7;}
+}
+.smile4{
+  animation: animate4 .5s;
+  animation-fill-mode: forwards; ;
+}
+@keyframes animate5{
+  80%{transform: matrix(1,0,0,1,-6.3,-2.4) scale(1.06); fill: #FE2A2A;}
+  100%{transform:scale(1.06); fill: #A70000;}
+}
+.smile5{
+  animation: animate5 .5s;
+  animation-fill-mode: forwards; ;
+}
+
+
+
+.fade0{
+  animation: fading0 1.2s;
+}
+@keyframes fading0{
+  100%{
+      fill: #FFF; opacity: 0;
+    }
+}
+@keyframes fading1{
+  100%{
+      fill: #FFF; opacity: 0;
+    }
+}
+.fade1{
+  animation: fading1 1.2s;;
+}
+@keyframes fading2{
+  100%{
+      fill: #FFF; opacity: 0;
+    }
+}
+.fade2{
+  animation: fading2 1.2s;;
+}
+@keyframes fading3{
+  100%{
+      fill: #FFF; opacity: 0;
+    }
+}
+.fade3{
+  animation: fading3 1.2s;;
+}
+@keyframes fading4{
+  100%{
+      fill: #FFF; opacity: 0;
+    }
+}
+.fade4{
+  animation: fading4 1.2s;;
+}
+@keyframes fading5{
+  100%{
+      fill: #FFF; opacity: 0;
+    }
+}
+.fade5{
+  animation: fading5 1.2s;;
+}
