@@ -12,7 +12,7 @@ export class MapInforComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-  	/*let count = 0
+  	let count = 0
   	let int = setInterval(()=>{
   		if(this.map.mapComponent&&this.map.regionPopulation.length>0){
   			clearInterval(int)
@@ -23,7 +23,7 @@ export class MapInforComponent implements OnInit {
   			clearInterval(int)
   			console.log('test degreeing out of time')
   		}
-  	},500)*/
+  	},500)
   }
 
 getSearcher(describer){

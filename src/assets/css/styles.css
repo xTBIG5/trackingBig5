@@ -134,7 +134,7 @@
   
   /*---------------------------------------------*/
   h1,h2,h3,h4,h5,h6 {
-      margin: 0px;
+      margin: auto;
   }
   
   p {
@@ -609,33 +609,7 @@ img {
 
 
 
-/*tooltips*/
 
-.test_text {
-    position: relative;
-    display: inline-block;
-    border-bottom: 1px dotted black;
-}
-
-.test_text .tooltiptext {
-    visibility: hidden;
-    width: 120px;
-    background-color: black;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-
-    /* Position the tooltip */
-    position: absolute;
-    z-index: 1;
-    top: -5px;
-    left: 105%;
-}
-
-.test_text:hover .tooltiptext {
-    visibility: visible;
-}
 
 
 /* ============ */
@@ -810,7 +784,7 @@ h4.great {
 }
 .form-horizontal{
     width: 75%;
-    float: right;
+    /*float: right*/;
 }
 
 
@@ -819,7 +793,13 @@ h4.great {
     color: #9e9e9e;
     font-weight: 600;
     width: 25%;
-    float: left;
+    /*float: left;*/
+}
+.ui-slider-handle{
+  display: none;
+}
+.price-box:hover .ui-slider-handle{
+  display: block;
 }
 hr {
     margin-top: 1rem;
@@ -1099,4 +1079,8 @@ button, input {
         .m-header-search__form {
             height: 3.2rem;
         }
+          
+    //tooltips
+        
+
     }
