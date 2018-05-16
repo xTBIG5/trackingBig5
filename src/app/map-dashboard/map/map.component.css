@@ -11,3 +11,8 @@ border-color:#a12345;
   float: left;
   width: 37%;
 }
+._container{
+	margin-right: 15px;
+	margin-left: 15px;
+}
+

@@ -2,31 +2,24 @@
 <div style='width: 100%'>
 <tb-scene ></tb-scene>
 </div> -->
-<h6 class="lh-1">Big5 Options</h6>
+
 <div style='width: 100%'>
 	<div class="content_choose">
 	  <div class="checkbox_choose">
-	    <div class="checkbox">
-	      <label>
-	        <input type="checkbox" value="">Openness</label>
-	    </div>
-	    <div class="checkbox">
-	      <label>
-	        <input type="checkbox" value="">Option 2</label>
-	    </div>
-	    <div class="checkbox">
-	      <label>
-	        <input type="checkbox" value="" disabled>Option 2</label>
-	    </div>
+		<mat-card>
+				<h3 >Big5 Options</h3>
+		  <mat-card-content>
 
-	    <div class="checkbox">
-	      <label>
-	        <input type="checkbox" value="" disabled>Option 4</label>
-	    </div>
-	    <div class="checkbox disabled">
-	      <label>
-	        <input type="checkbox" value="" disabled>Option 3</label>
-	    </div>
+		    <section class="example-section">
+		      <mat-checkbox class="example-margin" [(ngModel)]="checked">Openness</mat-checkbox>
+		      <mat-checkbox class="example-margin" [(ngModel)]="indeterminate">Consciencousness</mat-checkbox>
+		      <mat-checkbox class="example-margin" [(ngModel)]="chqecked">Checked</mat-checkbox>
+		      <mat-checkbox class="example-margin" [(ngModel)]="indeterminate">Indeterminate</mat-checkbox>
+		      <mat-checkbox class="example-margin" [(ngModel)]="e">Checked</mat-checkbox>
+		    </section>
+
+		  </mat-card-content>
+		</mat-card>
 	  </div>
 	  <div class="radio_choose">
 	    <div class="radio">

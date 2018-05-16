@@ -61,7 +61,7 @@ attr.fill="{{hover[i]}}" (mouseenter)='mouseenter(i)' (mouseleave)='mouseleave(i
     for(let i=0;i<this.pathShapes.length;i++){
       let path = this.document.createElementNS(this.xmlns,'path')
       path.setAttribute('d',this.pathShapes[i])
-      path.setAttribute('fill', "#123123")
+      path.setAttribute('fill', "#1F3123")
       path.setAttribute('transform', "matrix(0.4041,0,0,0.4041,0,0)")
       path.setAttribute('class', "path")
 
