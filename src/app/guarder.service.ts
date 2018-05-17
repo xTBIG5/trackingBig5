@@ -10,7 +10,8 @@ import { Http, Headers, RequestOptions } from '@angular/http';
 export class GuarderService {
 	user = {
 		_id:null,
-		type:null
+		type:null,
+		user_name:""
 	}
 
 	constructor(private http: Http) { }
@@ -36,6 +37,10 @@ export class GuarderService {
 		return {_id:null}
 	}
 
+	getUserName(){
+		return this.user.user_name
+	}
+
 	isAccepted(){
 		if(this.user._id)
 			return true
@@ -45,6 +50,13 @@ export class GuarderService {
 		if(this.user.type===1)
 			return 'user'
 		return 'manager'
+	}
+	logOut(){
+		this.user = {
+			_id:null,
+			type:null,
+			user_name:""
+		}
 	}
 
 
