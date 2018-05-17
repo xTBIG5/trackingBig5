@@ -1,90 +1,133 @@
+.square {
+        position: absolute;
+    	left: 300px;
+    	top: 220px;
+		width: 100px;
+		width: 800px;
+		height: 100px;
+		background: #ffffff;
+		text-align: center;
+		padding: 30px;
+		color: #000;
+		}
+.square1 {
+        position: absolute;
+    	left: 150px;
+    	top: 370px;
+    	width: 200px;
+		width: 1000px;
+		height: 50px;
+		background: #ffffff;
+		text-align: left; 
+		padding: 15px;
+		color: #5393AE;	
+		}
+.square11 {
+        position: absolute;
+    	left: 150px;
+    	top: 420px;
+    	width: 200px;
+		width: 1000px;
+		height: 200px;
+		background: #ffffff;
+		text-align: left; ;
+		padding: 15px;
+		color: #000000;	
+		}
+.square2 {
+		position: absolute;
+    	left: 150px;
+    	top: 670px;
+		width: 200px;
+        width: 1000px;
+		height: 50px;
+		background: #ffffff;
+		text-align: left;
+		padding: 15px;
+		color: #DF786F;
+		}
+.square22 {
+		position: absolute;
+    	left: 150px;
+    	top: 720px;
+		width: 200px;
+        width: 1000px;
+		height: 200px;
+		background: #ffffff;
+		text-align: left;
+		padding: 15px;
+		color: #000000;
+		}
+.square3 {
+        position: absolute;
+    	left: 150px;
+    	top: 970px;
+		width: 200px;
+		width: 1000px;
+		height: 50px;
+		background: #ffffff;
+		text-align: left;
+		padding: 15px;
+		color: #CAD35C;
+		}
+.square33 {
+        position: absolute;
+    	left: 150px;
+    	top: 1020px;
+		width: 200px;
+		width: 1000px;
+		height: 200px;
+		background: #ffffff;
+		text-align: left;
+		padding: 15px;
+		color: #000000;
+		}
+.square4 {
+        position: absolute;
+    	left: 150px;
+    	top: 1270px;
+		width: 200px;
+		width: 1000px;
+		height: 50px;
+		background: #ffffff;
+		text-align: left;
+		padding: 15px;
+		color: #52CD9F;
+		}
+.square44 {
+        position: absolute;
+    	left: 150px;
+    	top: 1320px;
+		width: 200px;
+		width: 1000px;
+		height: 200px;
+		background: #ffffff;
+		text-align: left;
+		padding: 15px;
+		color: #000000;
+		}
+.square5 {
+        position: absolute;
+    	left: 150px;
+    	top: 1570px;
+		width: 200px;
+		width: 1000px;
+		height: 50px;
+		background: #ffffff;
+		text-align: left;
+		padding: 15px;
+		color: #6D79AD;
+		}
+.square55 {
+        position: absolute;
+    	left: 150px;
+    	top: 1620px;
+		width: 200px;
+		width: 1000px;
+		height: 200px;
+		background: #ffffff;
+		text-align: left;
+		padding: 15px;
+		color: #000000;
+		}
 
-.circle {
-        	position: absolute;
-    		left: 320px;
-    		top: 160px;
-			width: 200px;
-			height: 200px;
-			background: #5393AE;
-			text-align: center;
-			padding: 100px;
-			color: #fff;
-			-moz-border-radius: 200px;
-			-webkit-border-radius: 200px;
-			border-radius: 200px;
-		}
-        .circle1 {
-			position: absolute;
-    		left: 70px;
-    		top: 320px;
-			width: 200px;
-            width: 200px;
-			height: 100px;
-			background: #DF786F;
-			text-align: left;
-			padding: 100px;
-			color: #fff;
-			-moz-border-radius: 200px;
-			-webkit-border-radius: 200px;
-			border-radius: 200px;
-		}
-        .circle2 {
-        	position: absolute;
-    		left: 570px;
-    		top: 320px;
-			width: 200px;
-			width: 200px;
-			height: 200px;
-			background: #CAD35C;
-			text-align: left;
-			padding: 100px;
-			color: #fff;
-			-moz-border-radius: 200px;
-			-webkit-border-radius: 200px;
-			border-radius: 200px;
-		}
-        .circle3 {
-        	position: absolute;
-    		left: 450px;
-    		top: 620px;
-			width: 200px;
-			width: 200px;
-			height: 200px;
-			background: #52CD9F;
-			text-align: center;
-			padding: 100px;
-			color: #fff;
-			-moz-border-radius: 200px;
-			-webkit-border-radius: 200px;
-			border-radius: 200px;
-		}
-        .circle4 {
-        	position: absolute;
-    		left: 130px;
-    		top: 620px;
-			width: 200px;
-			width: 200px;
-			height: 200px;
-			background: #6D79AD;
-			text-align: center;
-			padding: 100px;
-			color: #fff;
-			-moz-border-radius: 200px;
-			-webkit-border-radius: 200px;
-			border-radius: 200px;
-		}
-        .circle5 {
-        	position: absolute;
-    		left: 330px;
-    		top: 400px;
-			width: 200px;
-			width: 200px;
-			height: 200px;
-			background: #000000;
-			text-align: center;
-			padding: 50px;
-			color: #fff;
-			-moz-border-radius: 200px;
-			-webkit-border-radius: 200px;
-			border-radius: 200px;
-		}
