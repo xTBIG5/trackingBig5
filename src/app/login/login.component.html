@@ -6,11 +6,11 @@
           Login
         </span>
         <div class="wrap-input100 validate-input m-b-16" data-validate="Username is required">
-          <input class="input100" type="text" name="username" placeholder="Username">
+          <input #userName class="input100" type="text" name="username" placeholder="Username">
           <span class="focus-input100"></span>
         </div>
         <div class="wrap-input100 validate-input m-b-16" data-validate="Password is required">
-          <input class="input100" type="password" name="pass" placeholder="Password">
+          <input #password class="input100" type="password" name="pass" placeholder="Password">
           <span class="focus-input100"></span>
         </div>
         <div class="flex-sb-m w-full p-t-3 p-b-24">
@@ -19,13 +19,11 @@
            
           </div>
           <div>
-            <!-- <a href="#" class="txt1">
-              Forgot?
-            </a> -->
+            <h6>{{message}}</h6>
           </div>
         </div>
         <div class="container-login100-form-btn place_top">
-          <button class="login100-form-btn">
+          <button class="login100-form-btn" (click)='login()'>
             Login
           </button>
         </div>

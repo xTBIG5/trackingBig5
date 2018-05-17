@@ -29,6 +29,9 @@ import {MatRadioModule} from '@angular/material/radio';
 import { SceneComponent } from './map-dashboard/scene/scene.component';
 import { DrawToolComponent } from './map-dashboard/draw-tool/draw-tool.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { GuarderGuard } from './guarder.guard'
+import { LoginGuard } from './login.guard'
+import { GuarderService } from './guarder.service'
 
 @NgModule({
   declarations: [
@@ -66,6 +69,9 @@ import { DashboardComponent } from './dashboard/dashboard.component';
   providers: [
   	MapService,
     UserChartService,
+    GuarderService,
+    GuarderGuard,
+    LoginGuard
 
   ],
   bootstrap: [AppComponent]
