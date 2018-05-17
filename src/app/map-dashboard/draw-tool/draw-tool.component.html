@@ -1,0 +1,70 @@
+<svg #svg height="2400" version="1.1" width="6516.8" xmlns="http://www.w3.org/2000/svg" style="overflow: hidden; position: relative; left: -0.850006px;" viewBox=".4000267857142289 -1.40002678571428574 407.30000000000007 299.96756051587306" preserveAspectRatio="xMinYMin" fill="#E7EAEB" >
+	<rect x="-4" y="-4" width="814.6" height="600" fill-opacity=".6"  />
+
+  	<path class='path' *ngFor='let d of pathShapes; index as i' attr.fill="{{hover[i]}}"  attr.d={{d}}  transform="matrix(0.4041,0,0,0.4041,0,0)" />
+	<desc>Created with Raphaël 2.1.0</desc>
+	
+
+
+	<svg  x="20" y="20" width="30" height='20' fill="#3F384C" viewBox='0 0 30 20'>
+		<rect x="-0" y="-0" width="30" height="20" fill-opacity=".8"  stroke-width='.5' rx='1' ry='1'/>
+
+		
+		<text x='9' y='19' style='font-weight: bold;' font-size='3' fill="#FFF"
+		 (click)='down($event)'>down</text>
+
+		<text x='12' y='3' style='font-weight: bold;' font-size='3' fill="#FFF"
+		 (click)='up($event)'>up</text>
+
+		<text x='0' y='11.5' style='font-weight: bold;' font-size='3' fill="#FFF"
+		 (click)='left($event)'>left</text>
+
+		<text x='22' y='11.5' style='font-weight: bold;' font-size='3' fill="#FFF"
+		 (click)='right($event)'>right</text>
+
+		<text x='0' y='3' style='font-weight: bold;' font-size='3' fill="#FFF"
+		 (dblclick)='reset(this)'>reset</text>
+
+		<text x='0' y='19' style='font-weight: bold;' font-size='3' fill="#FFF"
+		 (dblclick)='one(this)'>ONE</text>
+
+		<text x='23' y='3' style='font-weight: bold;' font-size='3' fill="#FFF"
+		 (dblclick)='two(this)'>TWO</text>
+
+		<text x='19' y='19' style='font-weight: bold;' font-size='3' fill="#FFF"
+		 (dblclick)='three(this)'>THREE</text>
+
+		<text x='11' y='11.5' style='font-weight: bold;' font-size='3' fill="#FFF"
+		 (dblclick)='finish(this)'>FIN</text>
+
+		<text x='12' y='7' style='font-weight: bold;' font-size='3' fill="#FFF"
+		 (dblclick)='toNorth(this)'>N</text>
+
+		<text x='7' y='7' style='font-weight: bold;' font-size='3' fill="#FFF"
+		 (dblclick)='toWest(this)'>W</text>
+
+		<text x='13' y='16' style='font-weight: bold;' font-size='3' fill="#FFF"
+		 (dblclick)='toSouth(this)'>S</text>
+
+		<text x='19' y='7' style='font-weight: bold;' font-size='3' fill="#FFF"
+		 (dblclick)='toEast(this)'>E</text>
+
+		<text x='19' y='16' style='font-weight: bold;' font-size='3' fill="#FFF"
+		 (dblclick)='changePickRule($event,this)'>{{pickedSites.length}}</text>
+
+		<text x='6' y='16' style='font-weight: bold;' font-size='3' fill="#FFF"
+		 (dblclick)='toFront(this)'>Fr</text>
+
+		<text x='23' y='7' style='font-weight: bold;' font-size='3' fill="#FFF"
+		 (dblclick)='lineToEdge(this)'>LiTo</text>
+
+		<text x='23' y='16' style='font-weight: bold;' font-size='3' fill="#FFF"
+		 (dblclick)='morePath(this)'>New</text>
+
+		<text x='0' y='7' style='font-weight: bold;' font-size='3' fill="#FFF"
+		 (dblclick)='back(this)'><<</text>
+		
+
+	</svg>
+</svg>
+

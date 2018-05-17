@@ -1,0 +1,18 @@
+.border{
+border-width:1.2px; 
+border-style:solid; 
+border-color:#a12345;
+}
+.map{
+  float: left;
+  width: 63%;
+}
+.infor{
+  float: left;
+  width: 37%;
+}
+._container{
+	margin-right: 15px;
+	margin-left: 15px;
+}
+
