@@ -27,7 +27,7 @@ export class MapComponent implements OnInit, AfterViewInit {
   constructor( private mapService: MapService ) { }
 
   ngOnInit() {
-    this.getRegionPopulation()
+    //this.getRegionPopulation()
   }
 
   ngAfterViewInit() {

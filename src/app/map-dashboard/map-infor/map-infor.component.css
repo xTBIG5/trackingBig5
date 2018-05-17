@@ -1,15 +1,20 @@
 .example-section {
-  display: horizontal;
+  display: block;
   align-content: center;
   align-items: center;
   height: 60px;
 }
 h3{
-	color: #123123
+	color: #123123;
+	margin: 15px;
 }
 .example-margin {
   margin: 0 10px;
+  clear:left;
 }
-.mat-checkbox-checked.mat-accent .mat-checkbox-background .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
-    background-color: #123740;
+.radio-button{
+	margin-left: 5px; 
+}
+.radio-group{
+	float: right;
 }

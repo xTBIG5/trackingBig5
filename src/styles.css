@@ -11,7 +11,9 @@
     transform: matrix(1,0,0,1,-2520,260) scale(25);
     fill: #39263F;}
 }
-
+.mat-checkbox-indeterminate.mat-accent{
+    background-color: #123740;
+}
 .smile0{
   animation: animate0 .5s;
   animation-fill-mode: forwards; 

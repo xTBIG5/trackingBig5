@@ -5,39 +5,53 @@
 
 <div style='width: 100%'>
 	<div class="content_choose">
-	  <div class="checkbox_choose">
-		<mat-card>
-				<h3 >Big5 Options</h3>
-		  <mat-card-content>
+		<div class="checkbox_choose">
+			<h3 >Big5 Options</h3>
 
-		    <section class="example-section">
-		      <mat-checkbox class="example-margin" [(ngModel)]="checked">Openness</mat-checkbox>
-		      <mat-checkbox class="example-margin" [(ngModel)]="indeterminate">Consciencousness</mat-checkbox>
-		      <mat-checkbox class="example-margin" [(ngModel)]="chqecked">Checked</mat-checkbox>
-		      <mat-checkbox class="example-margin" [(ngModel)]="indeterminate">Indeterminate</mat-checkbox>
-		      <mat-checkbox class="example-margin" [(ngModel)]="e">Checked</mat-checkbox>
-		    </section>
-
-		  </mat-card-content>
-		</mat-card>
-	  </div>
-	  <div class="radio_choose">
-	    <div class="radio">
-	      <label>
-	        <input type="radio" name="optradio">Option 1</label>
-	    </div>
-	    <div class="radio">
-	      <label>
-	        <input type="radio" name="optradio">Option 2</label>
-	    </div>
-	    <div class="radio">
-	      <label>
-	        <input type="radio" name="optradio">Option 2</label>
-	    </div>
-
-	  </div>
+			<div class="example-section">
+				<div>
+					<mat-checkbox (change)='OChange()' class="example-margin" [(ngModel)]="O">Openness</mat-checkbox>
+					<mat-radio-group *ngIf='O' class="radio-group" [(ngModel)]="OLevel">
+						<mat-radio-button [checked]='1' class="radio-button" [value]="'High'">High</mat-radio-button>
+						<mat-radio-button class="radio-button" [value]="'Average'">Average</mat-radio-button>
+						<mat-radio-button class="radio-button" [value]="'Low'">Low</mat-radio-button>
+					</mat-radio-group>
+				</div>
+				<div>
+					<mat-checkbox (change)='CChange()' class="example-margin" [(ngModel)]="C">Conscientiousness</mat-checkbox>
+					<mat-radio-group *ngIf='C' class="radio-group" [(ngModel)]="CLevel">
+						<mat-radio-button [checked]='1' class="radio-button" [value]="'High'">High</mat-radio-button>
+						<mat-radio-button class="radio-button" [value]="'Average'">Average</mat-radio-button>
+						<mat-radio-button class="radio-button" [value]="'Low'">Low</mat-radio-button>
+					</mat-radio-group>
+				</div>
+				<div>
+					<mat-checkbox (change)='EChange()' class="example-margin" [(ngModel)]="E">Extraversion</mat-checkbox>
+					<mat-radio-group *ngIf='E' class="radio-group" [(ngModel)]="ELevel">
+						<mat-radio-button [checked]='1' class="radio-button" [value]="'High'">High</mat-radio-button>
+						<mat-radio-button class="radio-button" [value]="'Average'">Average</mat-radio-button>
+						<mat-radio-button class="radio-button" [value]="'Low'">Low</mat-radio-button>
+					</mat-radio-group>
+				</div>
+				<div>
+					<mat-checkbox (change)='AChange()' class="example-margin" [(ngModel)]="A">Agreeableness</mat-checkbox>
+					<mat-radio-group *ngIf='A' class="radio-group" [(ngModel)]="ALevel">
+						<mat-radio-button [checked]='1' class="radio-button" [value]="'High'">High</mat-radio-button>
+						<mat-radio-button class="radio-button" [value]="'Average'">Average</mat-radio-button>
+						<mat-radio-button class="radio-button" [value]="'Low'">Low</mat-radio-button>
+					</mat-radio-group>
+				</div>
+				<div>
+					<mat-checkbox (change)='NChange()' class="example-margin" [(ngModel)]="N">Neuroticism</mat-checkbox>
+					<mat-radio-group *ngIf='N' class="radio-group" [(ngModel)]="NLevel">
+						<mat-radio-button [checked]='1' class="radio-button" [value]="'High'">High</mat-radio-button>
+						<mat-radio-button class="radio-button" [value]="'Average'">Average</mat-radio-button>
+						<mat-radio-button class="radio-button" [value]="'Low'">Low</mat-radio-button>
+					</mat-radio-group>
+				</div>
+			</div>
+		</div>
 	</div>
-	<a href="" style='float: right; color:blue'>Advance options</a>
 </div>
 
 <div style='width: 100%;clear:left'>

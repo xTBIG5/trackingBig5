@@ -9,10 +9,24 @@ import { MapComponent } from '../map/map.component'
 })
 export class MapInforComponent implements OnInit {
   @Input() map: MapComponent
+  big5Levels = ['High','Average','Low']
+  O = false
+  OLevel = ''
+  C = false
+  CLevel = ''
+  E = false
+  ELevel = ''
+  A = false
+  ALevel = ''
+  N = false
+  NLevel = ''
+
+
   constructor() { }
 
+
   ngOnInit() {
-  	let count = 0
+  /*	let count = 0
   	let int = setInterval(()=>{
   		if(this.map.mapComponent&&this.map.regionPopulation.length>0){
   			clearInterval(int)
@@ -23,10 +37,26 @@ export class MapInforComponent implements OnInit {
   			clearInterval(int)
   			console.log('test degreeing out of time')
   		}
-  	},500)
+  	},500)*/
   }
 
-getSearcher(describer){
+  OChange(){
+    console.log('open',this.O, this.OLevel)
+  }
+  CChange(){
+    console.log('open',this.C)
+  }
+  EChange(){
+    console.log('open',this.E)
+  }
+  AChange(){
+    console.log('open',this.A)
+  }
+  NChange(){
+    console.log('open',this.N)
+  }
+
+  getSearcher(describer){
     let Searcher = {
       node : null,
       orObjectNumber : 0,
