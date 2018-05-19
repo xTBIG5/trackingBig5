@@ -2,12 +2,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { MapComponent } from './map-dashboard/map/map.component';
-import { MapService } from './map.service';
+import { MapService } from './service/map.service';
 import { LoginComponent } from './login/login.component';
 import { UserDashboardComponent } from './user-dashboard/user-dashboard.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { UserChartComponent } from './user-chart/user-chart.component';
-import { UserChartService } from './user-chart.service';
+import { UserChartService } from './service/user-chart.service';
 
 //import { HttpClientModule } from '@angular/common/http';
 
@@ -25,13 +25,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatCardModule} from '@angular/material/card';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatRadioModule} from '@angular/material/radio';
+import {MatTabsModule} from '@angular/material/tabs';
 
 import { SceneComponent } from './map-dashboard/scene/scene.component';
 import { DrawToolComponent } from './map-dashboard/draw-tool/draw-tool.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { GuarderGuard } from './guarder.guard'
-import { LoginGuard } from './login.guard'
-import { GuarderService } from './guarder.service'
+import { GuarderGuard } from './guard/guarder.guard'
+import { LoginGuard } from './guard/login.guard'
+import { GuarderService } from './service/guarder.service'
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import { GuarderService } from './guarder.service'
     AppRoutingModule,
     MatCardModule,
     MatRadioModule,
+    MatTabsModule
   ],
   providers: [
   	MapService,

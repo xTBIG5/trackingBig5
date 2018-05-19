@@ -1,8 +1,7 @@
-.example-section {
+.section {
   display: block;
   align-content: center;
   align-items: center;
-  height: 60px;
 }
 h3{
 	color: #123123;
@@ -17,4 +16,7 @@ h3{
 }
 .radio-group{
 	float: right;
+}
+.group{
+  margin-bottom: 10px;
 }

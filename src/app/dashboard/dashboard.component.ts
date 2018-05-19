@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserDashboardComponent } from '../user-dashboard/user-dashboard.component'
 import { MapComponent } from '../map-dashboard/map/map.component'
-import { GuarderService } from '../guarder.service'
+import { GuarderService } from '../service/guarder.service'
 import { Router } from '@angular/router'
 
 @Component({

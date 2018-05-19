@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserChartService } from '../user-chart.service'
+import { UserChartService } from '../service/user-chart.service'
 
 @Component({
   selector: 'tb-user-chart',

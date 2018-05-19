@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { GuarderService } from '../guarder.service'
+import { GuarderService } from '../service/guarder.service'
 import { Router } from '@angular/router'
 
 @Component({

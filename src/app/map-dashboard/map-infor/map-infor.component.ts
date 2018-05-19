@@ -3,29 +3,28 @@ import { MapComponent } from '../map/map.component'
 
 
 @Component({
-  selector: 'tb-map-infor',
-  templateUrl: './map-infor.component.html',
-  styleUrls: ['./map-infor.component.css']
+   selector: 'tb-map-infor',
+   templateUrl: './map-infor.component.html',
+   styleUrls: ['./map-infor.component.css']
 })
 export class MapInforComponent implements OnInit {
-  @Input() map: MapComponent
-  big5Levels = ['High','Average','Low']
-  O = false
-  OLevel = ''
-  C = false
-  CLevel = ''
-  E = false
-  ELevel = ''
-  A = false
-  ALevel = ''
-  N = false
-  NLevel = ''
+   @Input() map: MapComponent
+   O = false
+   OLevel = 'High'
+   C = false
+   CLevel = 'High'
+   E = false
+   ELevel = 'High'
+   A = false
+   ALevel = 'High'
+   N = false
+   NLevel = 'High'
 
 
-  constructor() { }
+   constructor() { }
 
 
-  ngOnInit() {
+   ngOnInit() {
   /*	let count = 0
   	let int = setInterval(()=>{
   		if(this.map.mapComponent&&this.map.regionPopulation.length>0){
@@ -41,196 +40,230 @@ export class MapInforComponent implements OnInit {
   }
 
   OChange(){
-    console.log('open',this.O, this.OLevel)
+     this.degreeingArr()
   }
   CChange(){
-    console.log('open',this.C)
+     this.degreeingArr()
   }
   EChange(){
-    console.log('open',this.E)
+     this.degreeingArr()
   }
   AChange(){
-    console.log('open',this.A)
+     this.degreeingArr()
   }
   NChange(){
-    console.log('open',this.N)
+     this.degreeingArr()
+  }
+
+  degreeingRegion(){
+     let discriber = '('
+     if(this.O)
+        discriber += this.OLevel[0]+'-O|'
+     if(this.C)
+        discriber += this.CLevel[0]+'-C|'
+     if(this.E)
+        discriber += this.ELevel[0]+'-E|'
+     if(this.A)
+        discriber += this.ALevel[0]+'-A|'
+     if(this.N)
+        discriber += this.NLevel[0]+'-N|'
+     if(discriber!=='(')
+        this.map.mapComponent.degreeing(this.getSearcher(discriber.slice(0,-1)+')'))
+
+  }
+
+  degreeingArr(){
+     let discriber = '('
+     if(this.O)
+        discriber += this.OLevel[0]+'-O|'
+     if(this.C)
+        discriber += this.CLevel[0]+'-C|'
+     if(this.E)
+        discriber += this.ELevel[0]+'-E|'
+     if(this.A)
+        discriber += this.ALevel[0]+'-A|'
+     if(this.N)
+        discriber += this.NLevel[0]+'-N|'
+     if(discriber!=='(')
+        this.map.mapComponent.degreeingArr(this.getSearcher(discriber.slice(0,-1)+')'))
+
   }
 
   getSearcher(describer){
-    let Searcher = {
-      node : null,
-      orObjectNumber : 0,
+     let Searcher = {
+        node : null,
+        orObjectNumber : 0,
 
-      checkOut(big5){
-        let temp = this.node
-        while(temp){
-          if(temp.checkOut(big5))
-            return true
-          temp = temp.next
+        checkOut(big5){
+           let temp = this.node
+           while(temp){
+              if(temp.checkOut(big5))
+                 return true
+              temp = temp.next
+           }
+           return false
+        },
+        pushTop(node){
+           if(this.node){
+              node.next = this.node
+              this.node = node
+           }
+           else
+              this.node = node
+           this.orObjectNumber++
+        },
+        pushBottom(node){
+           if(this.node){
+              let temp = this.node
+              while(temp.next)
+                 temp = temp.next
+              temp.next = node
+           }
+           else
+              this.node = node
+        },
+        pushMiddle(node){
+           if(this.node){
+              let temp = this.node
+              for(let i = 1; i<this.orObjectNumber;i++)
+                 temp = temp.next
+              if(temp.next){
+                 node.next = temp.next
+                 temp.next = node
+              }
+              else
+                 temp.next = node
+           }
+           else
+              this.node = node
         }
-        return false
-      },
-      pushTop(node){
-        if(this.node){
-          node.next = this.node
-          this.node = node
-        }
-        else
-          this.node = node
-        this.orObjectNumber++
-      },
-      pushBottom(node){
-        if(this.node){
-          let temp = this.node
-          while(temp.next)
-            temp = temp.next
-          temp.next = node
-        }
-        else
-          this.node = node
-      },
-      pushMiddle(node){
-        if(this.node){
-          let temp = this.node
-          for(let i = 1; i<this.orObjectNumber;i++)
-            temp = temp.next
-          if(temp.next){
-            node.next = temp.next
-            temp.next = node
-          }
-          else
-            temp.next = node
-        }
-        else
-          this.node = node
-      }
-    }
+     }
 
-    let OrNode = {
-      setBig5Criterion(criterion){
-        this.criterion = criterion
-      },
-      checkOut(big5){
-        return this.criterion.checkOut(big5)
-      }
-    }
+     let OrNode = {
+        setBig5Criterion(criterion){
+           this.criterion = criterion
+        },
+        checkOut(big5){
+           return this.criterion.checkOut(big5)
+        }
+     }
 
-    let AndNode = {
-      pushBig5Criterion(criterion){
+     let AndNode = {
+        pushBig5Criterion(criterion){
         //console.log('andNode')
         //console.log(criterion)
         if(this.criteria){
-          let temp = this.criteria
-          while(temp.next)
-            temp = temp.next
-          temp.next = criterion
+           let temp = this.criteria
+           while(temp.next)
+              temp = temp.next
+           temp.next = criterion
         }
         else
-          this.criteria = criterion
-      },
-      checkOut(big5){
+           this.criteria = criterion
+     },
+     checkOut(big5){
         let temp = this.criteria
         while(temp){
-          if(!temp.checkOut(big5))
-            return false
-          temp = temp.next
+           if(!temp.checkOut(big5))
+              return false
+           temp = temp.next
         }
         return true
-      }
-    }
+     }
+  }
 
-    let Criterion = {
-      setCriterion(key, degree){
+  let Criterion = {
+     setCriterion(key, degree){
         this.key = key
         this.degree = degree
-      },
-      checkOut(big5){
+     },
+     checkOut(big5){
         return big5[this.key]===this.degree
-      }
-    }
+     }
+  }
 
-    let noding = () => {
-      let getDegree = function(level){
+  let noding = () => {
+     let getDegree = function(level){
         if(level==='H')
-          return 3
+           return 3
         if(level==='L')
-          return 1
+           return 1
         return 2
-      }
+     }
 
-      let getOrNode = function(orNode){
+     let getOrNode = function(orNode){
         let criterionOr = Object.create(OrNode)
         criterionOr.setBig5Criterion(orNode)
         return criterionOr
-      }
-      let setAndNode = function(andNode){
+     }
+     let setAndNode = function(andNode){
         if(!isAndNode)
-          criterionAnd = Object.create(AndNode)
+           criterionAnd = Object.create(AndNode)
         criterionAnd.pushBig5Criterion(andNode)
-      }
-      let getCriterion = function(){
+     }
+     let getCriterion = function(){
         let criterion = Object.create(Criterion)
         criterion.setCriterion(describer[i-1], getDegree(describer[i-3]))
         return criterion
-      }
+     }
 
-      let searcher = Object.create(Searcher)
-      let isOrNode = true
-      let isAndNode = false
-      let criterionAnd
+     let searcher = Object.create(Searcher)
+     let isOrNode = true
+     let isAndNode = false
+     let criterionAnd
 
-      while(describer[i-1]!==')'){
+     while(describer[i-1]!==')'){
         if(describer[i]==='('){
-          i++
-          let childSearcher = noding()
+           i++
+           let childSearcher = noding()
 
-          if(describer[i]==='|' || describer[i]===')'){
-            if(isOrNode)
-              searcher.pushBottom(getOrNode(childSearcher))
-            else{
+           if(describer[i]==='|' || describer[i]===')'){
+              if(isOrNode)
+                 searcher.pushBottom(getOrNode(childSearcher))
+              else{
+                 setAndNode(childSearcher)
+                 searcher.pushMiddle(criterionAnd)
+                 isAndNode = false
+                 isOrNode = true
+              }
+              if(describer[i]===')')
+                 break
+           }
+           else if(describer[i]==='&'){
               setAndNode(childSearcher)
-              searcher.pushMiddle(criterionAnd)
-              isAndNode = false
-              isOrNode = true
-            }
-            if(describer[i]===')')
-              break
-          }
-          else if(describer[i]==='&'){
-            setAndNode(childSearcher)
-            isAndNode = true
-            isOrNode = false
-          }
+              isAndNode = true
+              isOrNode = false
+           }
         }
         else{
-          if(describer[i]==='|' || describer[i]===')'){
-            if(isOrNode)
-              searcher.pushTop(getOrNode(getCriterion()))
-            else{
+           if(describer[i]==='|' || describer[i]===')'){
+              if(isOrNode)
+                 searcher.pushTop(getOrNode(getCriterion()))
+              else{
+                 setAndNode(getCriterion())
+                 searcher.pushMiddle(criterionAnd)
+                 isAndNode = false
+                 isOrNode = true
+              }
+              if(describer[i]===')')
+                 break
+           }
+           else if(describer[i]==='&'){
               setAndNode(getCriterion())
-              searcher.pushMiddle(criterionAnd)
-              isAndNode = false
-              isOrNode = true
-            }
-            if(describer[i]===')')
-              break
-          }
-          else if(describer[i]==='&'){
-            setAndNode(getCriterion())
-            isAndNode = true
-            isOrNode = false
-          }
+              isAndNode = true
+              isOrNode = false
+           }
 
         }
 
         i++
-      }
-      return searcher
-    }
-
-    let i = 1;
-    let searcher = noding()
-    return searcher
+     }
+     return searcher
   }
+
+  let i = 1;
+  let searcher = noding()
+  return searcher
+}
 
 }

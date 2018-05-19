@@ -3,13 +3,11 @@ border-width:1.2px;
 border-style:solid; 
 border-color:#a12345;
 }
-.map{
-  float: left;
-  width: 63%;
+tb-country-map{
+  width: 64%;
 }
-.infor{
-  float: left;
-  width: 37%;
+tb-map-infor{
+  width: 36%;
 }
 ._container{
 	margin-right: 15px;

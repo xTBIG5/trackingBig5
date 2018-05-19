@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { MapService } from '../../map.service';
+import { MapService } from '../../service/map.service';
 
 @Component({
   selector: 'tb-map',
@@ -27,7 +27,7 @@ export class MapComponent implements OnInit, AfterViewInit {
   constructor( private mapService: MapService ) { }
 
   ngOnInit() {
-    //this.getRegionPopulation()
+    this.getRegionPopulation()
   }
 
   ngAfterViewInit() {
@@ -38,6 +38,8 @@ export class MapComponent implements OnInit, AfterViewInit {
     .subscribe(population => {
       this.regionPopulation = population;
       this.embedFuncs()
+      this.embedSVG()
+      this.mapComponent.showArrs()
     });
   }
 
@@ -99,6 +101,45 @@ export class MapComponent implements OnInit, AfterViewInit {
     }
   }
 
+  embedSVG(){
+    let pathRegions = this.mapComponent.regions
+    let pathArrs = this.mapComponent.arrs
+    let polygonSites = this.mapComponent.sites
+    let siteIndex = 0
+
+    function getRegionPath(id){
+      for(let path of pathRegions)
+        if(path._id===id)
+          return path
+      console.log('region id: '+id+"does not exist")
+    }
+    function getArrPath(id){
+      for(let path of pathArrs)
+        if(path._id===id)
+          return path
+      console.log('arr id: '+id+"does not exist")
+    }
+
+    for(let region of this.regionPopulation){
+      let regionPath = getRegionPath(region._id)
+      console.log('region',region)
+      regionPath.region = region
+      region.path = regionPath
+      for(let arr of region.arrs){
+        let arrPath = getArrPath(arr.arr_id)
+        arrPath.arr = arr
+        arr.path = arrPath
+        /*for(let site of arr.sites){
+          let polygon = polygonSites[siteIndex++]
+          polygon.site = site
+          site.polygon = polygon
+        }*/
+      }
+    }
+  }
+
+
+/*
   doParty(speed=25,step=10,showWhat='highestdimensionDegree'){
 
     let dressing = () => {
@@ -143,11 +184,11 @@ export class MapComponent implements OnInit, AfterViewInit {
 
       if(big5.collection.dress==null)
         delete big5.collection
-      /*let randomIndex = Math.floor(Math.random()*5)
+      let randomIndex = Math.floor(Math.random()*5)
       for(i = randomIndex;i<5;i++)
         turn()
       for(i=0;i<randomIndex;i++)
-        turn()*/
+        turn()
       
     }
 
@@ -193,7 +234,7 @@ export class MapComponent implements OnInit, AfterViewInit {
     
     let iterate = setInterval(dressing,speed)
   }
-
+*/
   shaping(longitude, latitude, type, size){
     let x = this.convertToX(longitude)
     let y = this.convertToY(latitude)
