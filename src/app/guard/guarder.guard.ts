@@ -10,10 +10,10 @@ export class GuarderGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-  	/*if(!this.guarder.isAccepted()){
+  	if(!this.guarder.isAccepted()){
   		this.router.navigate(['/login'])
   		return false
-  	}*/
+  	}
     return true
   }
 
