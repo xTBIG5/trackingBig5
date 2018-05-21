@@ -1,0 +1,22 @@
+<svg attr.width='{{baseWidth}}' attr.height='{{baseHeight}}'>
+	<ng-container *ngIf='dims.length!==0'>
+	<ng-container *ngFor='let dim of dims; let i=index'>
+		<rect attr.x="{{edgeWidth+i*(betweenWidth+rectWidth)}}" attr.y="{{bottonBase-height*(dim.L)}}" attr.width="{{rectWidth}}" attr.height="{{dim.L*height}}" fill="#5393AE" />
+		<rect attr.x="{{edgeWidth+i*(betweenWidth+rectWidth)}}" attr.y="{{bottonBase-height*(dim.L+dim.A)}}" attr.width="{{rectWidth}}" attr.height="{{dim.A*height}}" fill="#DF786F" />
+		<rect attr.x="{{edgeWidth+i*(betweenWidth+rectWidth)}}" attr.y="{{bottonBase-height}}" attr.width="{{rectWidth}}" attr.height="{{dim.H*height}}" fill="#CAD35C" />
+	</ng-container>
+	</ng-container>
+
+	
+	<polyline fill='none' stroke='#030304' stroke-width='2' attr.points='{{points}}' />
+	<text x="52" y="15" font-family="Verdana" font-size="10" font-weight='normal'>Percent</text>
+	<text x="400" y="343" font-family="Verdana" font-size="10" font-weight='normal'>Traits</text>
+
+	<text attr.x="" attr.y="" font-family="Verdana" font-size="10" font-weight='normal'>Openness</text>
+	<text attr.x="" attr.y="" font-family="Verdana" font-size="10" font-weight='normal'>Conscientiousness</text>
+	<text attr.x="" attr.y="" font-family="Verdana" font-size="10" font-weight='normal'>Extraversion</text>
+	<text attr.x="" attr.y="" font-family="Verdana" font-size="10" font-weight='normal'>Agreeableness</text>
+	<text attr.x="" attr.y="" font-family="Verdana" font-size="10" font-weight='normal'>Neuroticism</text>
+
+
+</svg>

@@ -49,11 +49,13 @@ export class CountryMapComponent implements OnInit {
     //this.showRegions()
     this.createRegions()
     this.createArrs()
-    //this.createSites()
+    this.createSites()
+
+    //ng serve
+    //this.showArrs()
   }
 
   getCountryMapCollection(collection){
-
     return collection
   }
 
@@ -66,6 +68,7 @@ export class CountryMapComponent implements OnInit {
       path.setAttribute('transform', "matrix(0.4041,0,0,0.4041,0,0)")
       path.setAttribute('class', "path")
 
+      path.addEventListener('click', this.showRegionChart.bind(this))
       /*path.addEventListener('mouseenter', this.mouseenter.bind(this))
       path.addEventListener('mouseleave', this.mouseleave.bind(this))*/
       path._id = i+1
@@ -73,11 +76,29 @@ export class CountryMapComponent implements OnInit {
     }
   }
 
-  showRegions(){
+  showRegionsAndSites(){
     for(let path of this.regions){
-      
       this.svg.nativeElement.appendChild(path)
     }
+    for(let site of this.sites){
+      this.svg.nativeElement.appendChild(site)
+    }
+  }
+
+  showOffArrs(){
+    for(let path of this.regions)
+      path.setAttribute('fill','#1F3123')
+    for(let path of this.arrs)
+      this.svg.nativeElement.removeChild(path)
+    
+  }
+
+  showArrs(){
+    let firstPath = this.regions[0]
+    for(let path of this.arrs)
+      this.svg.nativeElement.insertBefore(path,firstPath)
+    for(let path of this.regions)
+      path.setAttribute('fill','none')
   }
 
   createArrs(){
@@ -85,38 +106,48 @@ export class CountryMapComponent implements OnInit {
     for(let i=0;i<arrDraws.length;i++){
       let path = this.document.createElementNS(this.xmlns,'path')
       path.setAttribute('d',arrDraws[i].d)
-      path.setAttribute('fill', "#f1c12c1")
-      path.setAttribute('transform', "matrix(0.4041,0,0,0.4041,0,0)")
+      path.setAttribute('fill', "#ffcf2c")
       //path.setAttribute('class', "path")
 
+      path.addEventListener('click', this.showArrChart.bind(this))
       /*path.addEventListener('mouseenter', this.mouseenter.bind(this))
       path.addEventListener('mouseleave', this.mouseleave.bind(this))*/
       path._id = arrDraws[i].arr_id
       this.arrs.push(path)
     }
   }
-  showArrs(){
-    for(let path of this.arrs){
-      this.svg.nativeElement.appendChild(path)
-    }
-  }
 
   createSites(){
-    for(let site of this.map.big5s){
+    let i = 0
+    while(++i<1667){
       let polygon = this.document.createElementNS(this.xmlns,'polygon')
-      polygon.setAttribute('points',this.map.shaping(site.lon, site.lat, 1, 1))
       polygon.setAttribute('fill', "#A70000")
+      polygon.addEventListener('click', this.showSiteChart.bind(this))
       /*polygon.addEventListener('mouseenter', this.mouseenter.bind(this))
       polygon.addEventListener('mouseleave', this.mouseleave.bind(this))*/
       this.sites.push(polygon)
     }
   }
 
-  degreeing(searcher){
+  degreeingRegion(searcher){
     let percents = []
     for(let i=0;i<this.regions.length;i++){
       percents.push(this.map.regionPopulation[i].getRegionPopulationRate(searcher))
     }
+
+    let isAllZero = true
+    for(let per of percents)
+      if(per!==0){
+        isAllZero=false
+        break
+      }
+    if(isAllZero){
+      for(let i=0;i<this.regions.length;i++){
+        this.regions[i].setAttribute('fill', "#D5C3B1")
+      }
+      return
+    }
+
     let min = percents[0]
     let max = percents[0]
     for(let i=0;i<percents.length;i++){
@@ -142,6 +173,20 @@ export class CountryMapComponent implements OnInit {
         percents.push(arr.getArrPopulationRate(searcher))
         paths.push(arr.path)
       }
+
+    let isAllZero = true
+    for(let per of percents)
+      if(per!==0){
+        isAllZero=false
+        break
+      }
+    if(isAllZero){
+      for(let path of this.arrs){
+        path.setAttribute('fill', "#D5C3B1")
+      }
+      return
+    }
+
     let min = percents[0]
     let max = percents[0]
     for(let i=0;i<percents.length;i++){
@@ -254,6 +299,21 @@ export class CountryMapComponent implements OnInit {
   }
   mouseleave(index){
     this.hover[index] = '#C6BF9D'
+  }
+  showRegionChart(e){
+    this.map.chartComponent.dims = e.target.region.getRegionPopulationBig5Rate()
+    e.target.setAttribute('stroke',"#A70000")
+  }
+  showArrChart(e){
+    this.map.chartComponent.dims = e.target.arr.getArrPopulationBig5Rate()
+    e.target.setAttribute('stroke',"#A70000")
+  }
+  showSiteChart(e){
+    this.map.chartComponent.dims = e.target.site.getSitePopulationBig5Rate()
+    e.target.setAttribute('fill',"#5393AE")
+  }
+  showCountryChart(e){
+    this.map.chartComponent.dims = this.map.getCoutryPopulationBig5Rate()
   }
 
   getPathShapes(){

@@ -26,13 +26,16 @@ import {MatCardModule} from '@angular/material/card';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatTabsModule} from '@angular/material/tabs';
+import {MatSelectModule} from '@angular/material/select';
+import {MatIconModule} from '@angular/material/icon';
 
 import { SceneComponent } from './map-dashboard/scene/scene.component';
 import { DrawToolComponent } from './map-dashboard/draw-tool/draw-tool.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { GuarderGuard } from './guard/guarder.guard'
 import { LoginGuard } from './guard/login.guard'
-import { GuarderService } from './service/guarder.service'
+import { GuarderService } from './service/guarder.service';
+import { ChartComponent } from './map-dashboard/chart/chart.component'
 
 @NgModule({
   declarations: [
@@ -47,7 +50,8 @@ import { GuarderService } from './service/guarder.service'
     LoginComponent,
     UserDashboardComponent,
     UserChartComponent,
-    DashboardComponent
+    DashboardComponent,
+    ChartComponent
 
   ],
   imports: [
@@ -66,7 +70,9 @@ import { GuarderService } from './service/guarder.service'
     AppRoutingModule,
     MatCardModule,
     MatRadioModule,
-    MatTabsModule
+    MatTabsModule,
+    MatSelectModule,
+    MatIconModule
   ],
   providers: [
   	MapService,

@@ -1,11 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
-
+.path{
+  opacity: 1;
+  cursor: pointer;
+  stroke-opacity: 1;
+  stroke-linejoin: round;
+  fill-opacity: 1;
+  stroke: #ffffff;
+  stroke-width: .4900000000000003;
+}
 .expand{
   animation: expanding 1s;
   animation-fill-mode: forwards; 
 }
-@keyframes expanding{
+/*@keyframes expanding{
   5%{transform: matrix(1,0,0,1,0,54);}
   100%{
     transform: matrix(1,0,0,1,-2520,260) scale(25);
@@ -112,4 +120,4 @@
 }
 .fade5{
   animation: fading5 1.2s;;
-}
+}*/

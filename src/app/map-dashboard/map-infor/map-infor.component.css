@@ -3,20 +3,26 @@
   align-content: center;
   align-items: center;
 }
-h3{
-	color: #123123;
-	margin: 15px;
-}
-.example-margin {
-  margin: 0 10px;
-  clear:left;
-}
 .radio-button{
 	margin-left: 5px; 
 }
 .radio-group{
 	float: right;
 }
-.group{
-  margin-bottom: 10px;
+.btn{
+  min-width:1px;
+  padding-left:5px;
+  padding-right:5px;
+  background-color:#A38FC5;
+  line-height:26px;
+}
+table{
+  table-layout: fixed;
+  width: 100%;
+}
+tr{
+
+}
+.howDetail{
+  float: right;
 }
